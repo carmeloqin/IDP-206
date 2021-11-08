@@ -5,6 +5,12 @@
  modified 8 Nov 2013
  by Scott Fitzgerald
  http://www.arduino.cc/en/Tutorial/Sweep
+
+ IDP CIRCUIT:
+ Red to 5V
+ Black to GND
+ Yellow to signal - any digital pins
+ 
 */
 
 #include <Servo.h>
