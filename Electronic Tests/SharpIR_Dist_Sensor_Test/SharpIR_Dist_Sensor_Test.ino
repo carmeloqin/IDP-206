@@ -11,14 +11,14 @@ Test in progress.
 #include <SharpIR.h>
 
 #define IR A1 // define signal pin
-#define model 20150 // used 20150 because model GP2Y0A02Y is used
+#define model 1080 // used 20150 because model GP2Y0A02Y is used
 // Sharp IR code for Robojax.com
 // ir: the pin where your sensor is attached
 // model: an int that determines your sensor:  1080 for GP2Y0A21Y
 //                                            20150 for GP2Y0A02Y   THIS ONE THIS ONE THIS ONE
 //                                            430 for GP2Y0A41SK  
 
-SharpIR IRsensor(IR, model);
+SharpIR SharpIR(IR, model);
 
 
 void setup() {
@@ -30,13 +30,14 @@ void setup() {
 void loop() {
   // Sharp IR code for Robojax.com
   delay(500);   
-
   float volts = analogRead(IR)*0.0048828125;  // value from sensor * (5/1024)
-  int distance = 13*pow(volts, -1); // worked out from datasheet graph
+  int dis=SharpIR.getDistance();  // this returns the distance to the object you're measuring
+  //int distance = 13*pow(volts, -1); // worked out from datasheet graph
   delay(1000); // slow down serial port 
-  
-  if (distance <= 30){
-    Serial.println(distance);   // print the distance
+  Serial.print("Mean distance: ");  // returns it to the serial monitor
+  Serial.println(dis);
+  /*if (distance <= 30){
+    Serial.println(distance);   // print the distance*/
   }
 
 
@@ -69,5 +70,3 @@ void loop() {
   Serial.println(endTime);  
   // Sharp IR code for Robojax.com
   */
-     
-}
