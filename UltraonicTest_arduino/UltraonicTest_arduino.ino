@@ -17,7 +17,7 @@ void loop() {
    duration = pulseIn(echoPin, HIGH);
    mm = microsecondsToMillimeters(duration);
    Serial.print(mm);
-   Serial.print("mm");
+  // Serial.print("mm");
    Serial.println();
    delay(100);
 }
@@ -31,5 +31,5 @@ long microsecondsToCentimeters(long microseconds) {
 }
 
 long microsecondsToMillimeters(long microseconds) {
-   return 100 * microseconds / 29 / 2;
+   return 10 * microseconds / 29 / 2;
 }
