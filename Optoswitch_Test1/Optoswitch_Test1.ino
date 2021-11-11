@@ -5,8 +5,8 @@
 
 Adafruit_MotorShield AFMS = Adafruit_MotorShield();
 
-Adafruit_DCMotor *leftMotor = AFMS.getMotor(1);  //left motor on port 1
-Adafruit_DCMotor *rightMotor = AFMS.getMotor(2); //right motor on port 2
+Adafruit_DCMotor *leftMotor = AFMS.getMotor(4);  //left motor on port 1
+Adafruit_DCMotor *rightMotor = AFMS.getMotor(3); //right motor on port 2
 
 //Sensor Connection - changed temp. because behind wheel
 const int left_sensor_pin = A1;
@@ -44,8 +44,7 @@ bool line_white(char sensor)
     // if the reading of the right sensor is above a certain value, we assume that it is on the white line
     if (sensor = 'L')
     {
-        sensor_state = analogRead(left_sensor_pin);
-        Serial.println(sensor_state);                      
+        sensor_state = analogRead(left_sensor_pin);                      
         //Serial.println(sensor_state);
             if (sensor_state > IR_high1)
             {
@@ -60,7 +59,6 @@ bool line_white(char sensor)
     else if (sensor = 'R')
     {
         sensor_state = analogRead(right_sensor_pin);
-        Serial.println(sensor_state);
         //Serial.println(sensor_state);
             if (sensor_state > IR_high0)
             {
@@ -105,7 +103,8 @@ inline void line_follow_basic()
 {
     // Blindly follows the line until some time limit is reached.
     unsigned long start_time = millis();
-
+    Serial.println(right_sensor_pin);
+    Serial.println(left_sensor_pin);
     //while (millis() - start_time < TIMEOUT_MILLIS)
     while (1)
     {
