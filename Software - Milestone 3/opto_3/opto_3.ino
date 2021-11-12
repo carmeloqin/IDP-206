@@ -12,9 +12,10 @@ Adafruit_DCMotor *rightMotor = AFMS.getMotor(4); //right motor on port 2
 const int left_sensor_pin = A1;
 const int right_sensor_pin = A0;
 
-int sensor_state;
+int sensor_state_left;
+int sensor_state_right;
 
-int IR_high = 100;
+int IR_high = 150;
  
 void setup()
 {
@@ -29,37 +30,6 @@ void setup()
     rightMotor->setSpeed(0);
     rightMotor->run(FORWARD);
     rightMotor->run(RELEASE);
-}
-
-bool line_white(char sensor)
-{
-    // if the reading of the left sensor is above a certain value, we assume that it is on the white line
-    // if the reading of the right sensor is above a certain value, we assume that it is on the white line
-    if (sensor = 'L')
-    {
-        sensor_state = analogRead(left_sensor_pin);
-        //Serial.println("Left");
-        //Serial.println(sensor_state);
-    }
-    else if (sensor = 'R')
-    {
-        sensor_state = analogRead(right_sensor_pin);
-        //Serial.println("Right");
-        //Serial.println(sensor_state);
-    }
-    else
-    {
-        Serial.println('sensor not defined');
-    }
-
-    if (sensor_state > IR_high)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
 }
 
 void run_motor(int LEFT, int RIGHT)
@@ -81,25 +51,23 @@ inline void line_follow_basic()
     {
 
         // assumes for the moment that the sensors are ahead of the wheels.
-
-        int left = line_white('L');
-        Serial.print("Left: ");
-        Serial.println(left);
-        int right = line_white('R');
-        Serial.print("Right: ");
-        Serial.println(right);
-        
-        if (left && not right)
+        sensor_state_left = analogRead(left_sensor_pin);
+        sensor_state_right = analogRead(right_sensor_pin);
+        int touchline;
+        if (sensor_state_left > IR_high && sensor_state_right < IR_high)
         {
             run_motor(0, 255);
+            Serial.println(1);
         }
-        else if (right && not left)
+        else if (sensor_state_left < IR_high && sensor_state_right > IR_high)
         {
             run_motor(255, 0);
+            Serial.println(0);
         }
         else
         {
             run_motor(255,255);
+            Serial.println(10);
         }
     }
 }
