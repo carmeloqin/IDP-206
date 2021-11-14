@@ -34,6 +34,10 @@ void setup()
 
 void run_motor(int LEFT, int RIGHT)
 {
+    // In software video and powerpoint, http://www-h.eng.cam.ac.uk/help/tpl/IDP/softwaretalk.html
+    // IT says to compare motor speed with previous, and if its the same, don't update the motors.
+    // TODO
+    
     leftMotor->setSpeed(LEFT);
     leftMotor->run(BACKWARD);
     rightMotor->setSpeed(RIGHT);
