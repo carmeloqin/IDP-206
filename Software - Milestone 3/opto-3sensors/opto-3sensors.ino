@@ -117,7 +117,7 @@ inline void line_follow_basic()
         }
         else if (not command[0] && command[1] && not command[2])
         {
-            run_motor(150,150);
+            run_motor(255,255);
             Serial.println("010");
         }
         else if (not command[0] && not command[1] && command[2])
@@ -127,7 +127,7 @@ inline void line_follow_basic()
         }
         else
         {
-            run_motor(150,150);
+            run_motor(255,255);
             Serial.println("000");
         }
     }
