@@ -52,3 +52,36 @@ In windows control panel search "Bluetooth" and select "Change Bluetooth Setting
 In the COM Ports tab -> Add -> Outgoing Browse and select your robot device.
 
 You will now have a new COM port which is the Bluetooth connection, so you can now use this com port in python for communication with your robot over Bluetooth
+
+
+C:\Users\jense\Documents\ArduinoData\packages\esp32\tools\esptool_py\3.0.0/esptool.exe --chip esp32 --port COM6 --baud 115200 --before no_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 40m --flash_size detect 0xe000 C:\Users\jense\Documents\ArduinoData\packages\esp32\hardware\esp32\1.0.6/tools/partitions/boot_app0.bin 0x1000 C:\Users\jense\Documents\ArduinoData\packages\esp32\hardware\esp32\1.0.6/tools/sdk/bin/bootloader_dio_40m.bin 0x10000 C:\Users\jense\AppData\Local\Temp\arduino_build_54266/SerialToSerialBT.ino.bin 0x8000 C:\Users\jense\AppData\Local\Temp\arduino_build_54266/SerialToSerialBT.ino.partitions.bin
+
+
+Code copy:
+void setup() {
+     pinMode(NINA_RESETN, OUTPUT);         
+     digitalWrite(NINA_RESETN, LOW);
+
+     Serial.begin(115200);
+     Serial.println("Baud begun at 115200"); // This line is not printing yet, why??
+     SerialNina.begin(115200);
+
+     //pinMode(2, OUTPUT);
+}
+void loop() {
+  if (Serial.available()) {
+  SerialNina.write(Serial.read());}
+  if (SerialNina.available()) {
+  Serial.write(SerialNina.read());}
+
+  //int frequency = SerialNina.read();
+  //int frequency = frequencyString.toInt();
+
+//  Serial.write(frequency);
+//  
+//  digitalWrite(2, HIGH);
+//  delay(1000/frequency);
+//  digitalWrite(2, LOW);
+//  delay(1000/frequency);
+
+}
