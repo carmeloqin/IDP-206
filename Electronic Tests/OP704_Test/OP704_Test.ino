@@ -17,7 +17,7 @@ int threshold = 23;
 
 void setup() {
   pinMode(A0, INPUT);
-  pinMode(A1, INPUT);
+  //pinMode(A1, INPUT);
   //pinMode(A2, INPUT);
   Serial.begin(9600);
   Serial.println("OP704 Test");
@@ -31,7 +31,7 @@ void loop() {
   //int opto2 = analogRead(A2);
 
   Serial.println(opto0);
-  Serial.println(opto1);
+  //Serial.println(opto1);
   //Serial.println(opto2);
   Serial.println("");
   
