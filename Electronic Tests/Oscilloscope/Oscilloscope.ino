@@ -13,17 +13,17 @@ void loop() {
   //delay(1);
   
   float a0 = analogRead(A0);
-  //float a1 = 1023 - analogRead(A1);
+  float a1 = analogRead(A1);
   //float a2 = analogRead(A2);
   //float a3 = analogRead(A3);
   //float a4 = analogRead(A4);
   //float a5 = analogRead(A5);
 
 
-  Serial.println(a0);
-  //Serial.print("\t");
+  Serial.print(a0);
+  Serial.print("\t");
 
-  //Serial.println(a1);
+  Serial.println(a1);
   //Serial.print("\t");
 /*
   Serial.print(a2);
