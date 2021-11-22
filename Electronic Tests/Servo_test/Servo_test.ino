@@ -62,7 +62,7 @@ void loop() {
   Serial.print(", angle2: ");
   Serial.println(angle2);
   // set the servo position
-  myServo.write(angle2);
+  myServo2.write(angle2);
 
 
 
