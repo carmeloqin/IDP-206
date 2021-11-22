@@ -7,8 +7,8 @@ void setup() {
      Serial.begin(115200);
      SerialNina.begin(115200);
 
-     pinMode(2, OUTPUT);
-     digitalWrite(2, HIGH);
+//     pinMode(2, OUTPUT);
+//     digitalWrite(2, HIGH);
 }
 
 void loop() {
@@ -28,7 +28,4 @@ void loop() {
 //    }
 //    delay(100);
 //  }
-
-  
-  
 }
