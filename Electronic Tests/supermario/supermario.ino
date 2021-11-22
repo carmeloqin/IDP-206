@@ -72,58 +72,43 @@ void setup(void)
 }
 void loop()
 {
-//sing the tunes
-  sing(1);
+  //sing the tunes
+  // the super mario theme except it keeps getting faster
+  sing(1.0);
+  sing(0.9);
+  sing(0.8);
+  sing(0.7);
+  sing(0.6);
+  sing(0.5);
+  sing(0.4);
+  sing(0.3);
+  sing(0.2);
+  sing(0.1);
+  
 }
 int song = 0;
 
-void sing(int s){      
+void sing(float speeeeed){      
    // iterate over the notes of the melody:
-   song = s;
-   if(song==2){
-     Serial.println(" 'Underworld Theme'");
-     int size = sizeof(underworld_melody) / sizeof(int);
-     for (int thisNote = 0; thisNote < size; thisNote++) {
+   Serial.println(" 'Mario Theme'");
+   int size = sizeof(melody) / sizeof(int);
+   for (int thisNote = 0; thisNote < size; thisNote++) {
 
-       // to calculate the note duration, take one second
-       // divided by the note type.
-       //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
-       int noteDuration = 1000/underworld_tempo[thisNote];
+     // to calculate the note duration, take one second
+     // divided by the note type.
+     //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
+     int noteDuration = 1000/tempo[thisNote] * speeeeed;
 
-       tone(melodyPin, underworld_melody[thisNote],noteDuration);
+     tone(melodyPin, melody[thisNote],noteDuration);
 
-       // to distinguish the notes, set a minimum time between them.
-       // the note's duration + 30% seems to work well:
-       int pauseBetweenNotes = noteDuration * 1.30;
-       delay(pauseBetweenNotes);
+     // to distinguish the notes, set a minimum time between them.
+     // the note's duration + 30% seems to work well:
+     int pauseBetweenNotes = noteDuration * 1.30;
+     delay(pauseBetweenNotes);
 
-       // stop the tone playing:
-       tone(melodyPin, 0,noteDuration);
-
-    }
-
-   }else{
-
-     Serial.println(" 'Mario Theme'");
-     int size = sizeof(melody) / sizeof(int);
-     for (int thisNote = 0; thisNote < size; thisNote++) {
-
-       // to calculate the note duration, take one second
-       // divided by the note type.
-       //e.g. quarter note = 1000 / 4, eighth note = 1000/8, etc.
-       int noteDuration = 1000/tempo[thisNote];
-
-       tone(melodyPin, melody[thisNote],noteDuration);
-
-       // to distinguish the notes, set a minimum time between them.
-       // the note's duration + 30% seems to work well:
-       int pauseBetweenNotes = noteDuration * 1.30;
-       delay(pauseBetweenNotes);
-
-       // stop the tone playing:
-       tone(melodyPin, 0,noteDuration);
-
-    }
+     // stop the tone playing:
+     tone(melodyPin, 0,noteDuration);
+   
   }
 }
 

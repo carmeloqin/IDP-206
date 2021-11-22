@@ -37,13 +37,15 @@ void digitalCode(){
     //Serial.println(digitalRead(2));
 
   int count = 0;
-  int prevtime = millis();
+  unsigned long prevtime = millis();
   bool state = false;
-  while (millis() - prevtime <= 100){ // rollover issue to solve
-    if (digitalRead(2)== HIGH && state == false){
+  int pin2val;
+  while (millis() - prevtime <= 1000){ // rollover issue to solve
+    pin2val = digitalRead(2);
+    if (pin2val == HIGH && state == false){
       state = true;
     }
-    if (digitalRead(2)== LOW && state == true){
+    if (pin2val == LOW && state == true){
       state = false;
       count += 1;  
     }
