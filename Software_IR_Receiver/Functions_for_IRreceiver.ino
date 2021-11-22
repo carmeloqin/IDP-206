@@ -17,7 +17,7 @@ int digitalCount(){
       count += 1;  
     }
   }
-  Serial.println(count);
+  //Serial.println(count);
   return count;
   //delay(500);
 
@@ -26,21 +26,28 @@ int digitalCount(){
 int dummyMode(){
   int modeAverage = 0;
   int modeSum = 0;
-  for ( int i = 0; i <= 9; i++){
+  int output;
+  int repetition = 3;
+  for ( int i = 0; i < repetition; i++){
     digitalnum = digitalCount();
+    Serial.print("Digital Count:");
+    Serial.println(digitalnum);
     modeSum = modeSum + digitalnum;
     }
-  modeAverage = modeSum / 10;
+  modeAverage = modeSum / repetition;
+  Serial.println(modeAverage);
   if (modeAverage > 3000 && modeAverage < 4000){
-    return 0;
+    output = 0;
   }
   else if (modeAverage > 50 && modeAverage < 300){
-    return 1;
+    output = 1;
   }
   else if (modeAverage > 1400 && modeAverage < 2600){
-    return 2;
+    output = 2;
   }
   else {
-    return 3;
+    output = 3;
   }
+  Serial.println(output);
+  return output;
 }
