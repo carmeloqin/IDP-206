@@ -33,7 +33,7 @@ void analogCodeBigSmall() {
   Serial.println(smallcount);
 }
 
-void digitalCode(){
+void digitalCode(int pin){
     //Serial.println(digitalRead(2));
 
   int count = 0;
@@ -41,7 +41,7 @@ void digitalCode(){
   bool state = false;
   int pin2val;
   while (millis() - prevtime <= 1000){ // rollover issue to solve
-    pin2val = digitalRead(2);
+    pin2val = digitalRead(pin);
     if (pin2val == HIGH && state == false){
       state = true;
     }

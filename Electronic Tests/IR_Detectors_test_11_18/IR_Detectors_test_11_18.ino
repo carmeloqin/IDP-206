@@ -1,10 +1,12 @@
+
 int sensorPin = A0;    // select the input pin for the TSOP
 int OutputPin = A1;
 int pot = A2;
 int sensorValue = 0;  // variable to store the value coming from the sensor
 int PhotoTransistorPin = A5;
-int InputPin = A3;
-
+int FilterPin = A3;
+int OutputPinOutput;
+int FilterPinOutput;
 void setup() {
   // initialize digital pin LED_BUILTIN as an output.
   Serial.begin(9600); 
@@ -17,9 +19,12 @@ void setup() {
 
 // the loop function runs over and over again forever
 void loop() {
-  Serial.print(analogRead(OutputPin));  
-  Serial.print('\t');
-  Serial.println(analogRead(InputPin));
+  OutputPinOutput = analogRead(OutputPin);
+  FilterPinOutput = analogRead(FilterPin);
+  //Serial.println(digitalRead(5));
+ //Serial.print(OutputPinOutput);  
+ //Serial.print('\t');
+  Serial.println(FilterPinOutput);
   //Serial.print('\t');
   //Serial.println(analogRead(InputPin)-analogRead(OutputPin));
   //Serial.print(analogRead(A0));

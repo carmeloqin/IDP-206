@@ -10,5 +10,5 @@ void loop() {
   pinMode(outputPin,INPUT);
   Serial.print(digitalRead(outputPin)); // Output to Serial - 0 = Light not blocked, 1 = Blocked
   Serial.println();
-  delay(50);
+  delay(5);
 }
