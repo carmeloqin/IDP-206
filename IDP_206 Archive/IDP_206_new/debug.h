@@ -74,7 +74,6 @@ namespace debug {
   void findDummy() {
     while(true) {
       byte flag = sensors::findDummy();
-      Serial.println(last_dummy_found);
       switch (flag) {
         case WHITE_DUMMY:
           Serial.println("White dummy");

@@ -43,7 +43,7 @@ const int redLEDPin = A5;
 const int startButtonPin = 13;
 
 // PID
-int KP = 5;
+int KP = 10;
 int KI = 0;
 int KD = 0;
 const int tuningFactor = 100;

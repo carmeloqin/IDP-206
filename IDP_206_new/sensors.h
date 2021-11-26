@@ -22,6 +22,7 @@ namespace sensors {
     digitalWrite(ultraSonicPingPin, LOW);
     duration = pulseIn(ultraSonicEchoPin, HIGH);
     mm = 10 * duration / 29 / 2;
+    Serial.println(mm);
     return mm;
   }
 
@@ -65,12 +66,14 @@ namespace sensors {
   }
 
   byte _findDummyPin(int pin, int repeat = 3) {
-    int sum;
+    int sum = 0;
     for (int i = 0; i < repeat; i++) {
       sum += sensors::getIRPhototransitorCounts(pin);// todo
     }
     
     int average = sum / repeat;
+//    Serial.print("av");
+//    Serial.println(average);
     // last_dummy_found will not be updated if NO_DUMMY is found
     if (average > 300 && average < 400) {
       last_dummy_found = WHITE_DUMMY;

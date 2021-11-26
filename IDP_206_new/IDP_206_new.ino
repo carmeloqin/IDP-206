@@ -7,14 +7,15 @@ void setup() {
   sensors::begin();
 }
 
-//void loop() {
-//  if (conditionals::isStartButtonPressed()) {
-//    Serial.println("Starting..");
-////    algo::getFirstDummy();
+void loop() {
+  if (conditionals::isStartButtonPressed()) {
+    Serial.println("Starting..");
+    algo::getFirstDummy();
 //    debug::plotLightValues();
-////    debug::plotLightValuesDerivative();
-////      debug::findDummy();
-////    debug::plotIRPhototransitorCounts();
-////   debug::findDummyaa();
-//  }
-//}
+//    debug::plotLightValuesDerivative();
+//      debug::findDummy();
+//    debug::plotIRPhototransitorCounts();
+//   debug::findDummyaa();
+//    debug::plotDistanceUltraSonic();
+  }
+}

@@ -5,7 +5,7 @@
 #include "variables.h"
 #include "motors.h"
 #include "sensors.h"
-#include "conditionals.h"
+#include "helper.h"
 
 namespace controller {
   class PID {
@@ -46,21 +46,44 @@ namespace controller {
     private:
       int getError() {
         LightValues l_value = sensors::getLightValues();
-        return (l_value.front_right - l_value.front_left) - offset;
+
+//        Serial.print(l_value.front_right);
+//        Serial.print("\t");
+//        Serial.print(l_value.front_left);
+//        Serial.print("\t");
+//        Serial.print(l_value.back_right);
+//        Serial.print("\t");
+//        Serial.println(l_value.back_left);
+//        
+//        bool leftw = isWhite(l_value.front_left); // Left is white
+//        bool rightw = isWhite(l_value.front_right);
+//        bool leftb = isBlack(l_value.front_left);
+//        bool rightb = isBlack(l_value.front_right);
+//        bool leftm = !leftw && !leftb;
+//        bool rightm = !rightw && !rightb;
+  
+        int error = (l_value.front_right - l_value.front_left) - offset;
+  
+//        if (leftb && rightm) {
+//          error = - (l_value.front_right + BLACK + THRESHOLD);
+//        } else if (leftm && rightb) {
+//          error = l_value.front_left + BLACK + THRESHOLD;
+//        }
+        return error;
       }
   
     public:
       void run(byte flag, bool isDone(), int repeat = 1,
                void done() = [](){},
-               int power = averagePower,
                void error() = [](){Serial.println("Error! Vehicle is off the line!");}) {
         PID pid {};
         motors::runLeft(flag);
         motors::runRight(flag);
+        last_at_junction = millis();
   
         for (int i = 0; i < repeat; i++) {
           while (!isDone()) {
-            if (!conditionals::isOnLineFront()) {
+            if (!isOnLineFront()) {
               motors::runLeft(RELEASE);
               motors::runRight(RELEASE);
               return error();
@@ -71,10 +94,10 @@ namespace controller {
             if (flag == BACKWARD) {
               turn *= (-1);
             }
-            motors::setMotorsSpeed(turn, power);
-            
-            delay(50);
+            motors::setMotorsSpeed(turn, averagePower);
           }
+          Serial.print("Junction Arrived: ");
+          Serial.println(i+1);
         }
         
         motors::runLeft(RELEASE);
@@ -87,20 +110,18 @@ namespace controller {
     public:
       void run(byte flag, bool isDone(), int repeat = 1,
                void done() = [](){},
-               int power = averagePower,
                void error() = [](){Serial.println("Error! Vehicle is not moving!");}) {
         motors::runLeft(flag);
         motors::runRight(flag);
-        motors::setMotorsSpeed(0, power);
+        motors::setMotorsSpeed(0, averagePower);
 
         for (int i = 0; i < repeat; i++) {
           while (!isDone()) {
-            if (!conditionals::isMoving()) {
+            if (!isMoving()) {
               motors::runLeft(RELEASE);
               motors::runRight(RELEASE);
               return error();
             }
-            delay(50);
           }
         }
         
@@ -111,7 +132,6 @@ namespace controller {
       
       void rotate(byte flag, bool isDone(), int repeat = 1,
                   void done() = [](){},
-                  int power = averagePower,
                   void error() = [](){Serial.println("Error! Vehicle is not rotating!");}) {
         switch (flag) {
           case CLOCKWISE:
@@ -123,21 +143,21 @@ namespace controller {
             motors::runRight(FORWARD);
             break;
         }
-        motors::setMotorsSpeed(0, power); // turning = 0
-
-        delay(1000);
+        motors::setMotorsSpeed(0, averagePower); // turning = 0
+  
         for (int i = 0; i < repeat; i++) {
+          delay(1000);
           while (!isDone()) {
-            if (!conditionals::isRotating()) {
+            if (!isRotating()) {
               motors::runLeft(RELEASE);
               motors::runRight(RELEASE);
               return error();
             }
-            delay(50);
+            // could do some delay here
           } 
         }
 
-        delay(50); // To get back to the centre of the line;
+        delay(50);
         motors::runLeft(RELEASE);
         motors::runRight(RELEASE);
         done();

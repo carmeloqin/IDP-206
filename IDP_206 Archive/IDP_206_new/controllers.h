@@ -124,8 +124,7 @@ namespace controller {
             break;
         }
         motors::setMotorsSpeed(0, power); // turning = 0
-
-        delay(1000);
+  
         for (int i = 0; i < repeat; i++) {
           while (!isDone()) {
             if (!conditionals::isRotating()) {

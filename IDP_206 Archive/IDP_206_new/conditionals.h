@@ -13,13 +13,6 @@ namespace conditionals {
     return left && right;
   }
 
-  bool isAtJunctionOR(int left_value, int right_value) {
-    bool left = sensors::isWhite(left_value);
-    bool right = sensors::isWhite(right_value);
-    
-    return left || right;
-  }
-
   bool isAtJunctionFront() {
     LightValues l_value = sensors::getLightValues();
     return isAtJunction(l_value.front_left, l_value.front_right);
@@ -42,18 +35,9 @@ namespace conditionals {
               || (d2 * coeff > DERIVATIVE_THRESHOLD);
   }
   
-  bool isArrivingJunctionBack1() {
+  bool isArrivingJunctionBack() {
     LightValues d_l_value = sensors::getLightValuesDerivative();
     return isAtEdgeAND(d_l_value.back_left, d_l_value.back_right, (-1));
-  }
-
-  bool isArrivingJunctionBack() {
-    if (isAtJunctionBack()) {
-      delay(500);
-      Serial.println("at Junction");
-      return true;
-    }
-    return false;
   }
   
   bool isArrivingJunctionFront() {
@@ -71,14 +55,9 @@ namespace conditionals {
     return isAtEdgeAND(d_l_value.front_left, d_l_value.front_right, 1);
   }
 
-  bool isGettingOnLineFront1() {
+  bool isGettingOnLineFront() {
     LightValues d_l_value = sensors::getLightValuesDerivative();
     return isAtEdgeOR(d_l_value.front_left, d_l_value.front_right, (-1));
-  }
-
-  bool isGettingOnLineFront() {
-    LightValues l_value = sensors::getLightValues();
-    return isAtJunctionOR(l_value.front_left, l_value.front_right);
   }
 
   bool isGettingOffLineFront() {
@@ -120,18 +99,9 @@ namespace conditionals {
     return low < d && d < high;
   }
   
-  bool isDummyFound1() {
-    byte flag = sensors::findDummy();
-    bool found = !(flag == NO_DUMMY) && isWithinRangeUltraSonic(40, 50);
-//    Serial.println(found);
-    return found;
-  }
-
   bool isDummyFound() {
-//    byte flag = sensors::findDummy();
-    bool found = isWithinRangeUltraSonic(65, 80);
-//    Serial.println(found);
-    return found;
+    byte flag = sensors::findDummy();
+    return !(flag == NO_DUMMY) && isWithinRangeUltraSonic(40, 60);
   }
 
 }

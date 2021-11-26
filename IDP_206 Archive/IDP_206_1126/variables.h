@@ -1,7 +1,7 @@
 #ifndef VARIABLES_H
 #define VARIABLES_H
 
-// Pins
+//// Pins
 //const int frontLeftPin = A3;
 //const int frontRightPin = A2;
 //const int backRightPin = A5;
@@ -20,7 +20,6 @@
 //const int redLEDPin = 10;
 //const int speakerPin = 11;
 //const int startButtonPin = 13;
-
 //NEW PINS (26/11)
 const int frontLeftPin = A0;
 const int frontRightPin = A1;
@@ -43,7 +42,7 @@ const int redLEDPin = A5;
 const int startButtonPin = 13;
 
 // PID
-int KP = 5;
+int KP = 13;
 int KI = 0;
 int KD = 0;
 const int tuningFactor = 100;
@@ -73,7 +72,7 @@ struct LightValues {
   int back_right;
 } current_l_value, last_l_value;
 
-const unsigned long OFF_LINE_TIMEOUT = 1500;
+const int OFF_LINE_TIMEOUT = 1500;
 
 // Dummies
 const byte WHITE_DUMMY = 0;
@@ -82,11 +81,9 @@ const byte BLUE_DUMMY = 2;
 const byte NO_DUMMY = 3;
 byte last_dummy_found = NO_DUMMY;
 
-// Phototransitor
-unsigned long PULSE_LENGTH = 6000;
-
 // Global
 bool moving;
-unsigned long last_on_line_front;
+int last_on_line_front;
+int last_at_junction;
 
 #endif

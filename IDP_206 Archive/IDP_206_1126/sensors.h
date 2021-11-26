@@ -100,19 +100,27 @@ namespace sensors {
   
   LightValues getLightValues() {
     last_l_value = current_l_value;
-//    current_l_value.front_left = analogReadAverage(frontLeftPin);
-    current_l_value.front_left = 0;
+    current_l_value.front_left = analogReadAverage(frontLeftPin);
     current_l_value.front_right = analogReadAverage(frontRightPin);
-    current_l_value.back_right = analogReadAverage(backRightPin);
-    current_l_value.back_left = analogReadAverage(backLeftPin);
+//    current_l_value.back_right = analogReadAverage(backRightPin);
+//    current_l_value.back_left = analogReadAverage(backLeftPin);
+//New 26/11/2021
+    if(digitalRead(backRightPin)) {
+      current_l_value.back_right = 1023;
+    } else current_l_value.back_right = 0;
 
-    Serial.print(current_l_value.front_left);
-    Serial.print('\t');
-    Serial.print(current_l_value.front_right);
-    Serial.print('\t');
-    Serial.print(current_l_value.back_right);
-    Serial.print('\t');
-    Serial.println(current_l_value.back_left);
+    if (digitalRead(backLeftPin)) {
+      current_l_value.back_left = 1023;
+    } else current_l_value.back_left = 0;
+    return current_l_value;
+  
+//    Serial.print(current_l_value.front_left);
+//    Serial.print('\t');
+//    Serial.print(current_l_value.front_right);
+//    Serial.print('\t');
+//    Serial.print(current_l_value.back_right);
+//    Serial.print('\t');
+//    Serial.println(current_l_value.back_left);
     delay(25);
     return current_l_value;
   }
