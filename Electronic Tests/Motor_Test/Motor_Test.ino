@@ -27,7 +27,7 @@ void setup() {
 }
 
 void loop() {
-  /*Serial.print("tick ");
+  Serial.print("tick ");
   
   myMotor->run(FORWARD);      // turn it on going forward
   myMotor->setSpeed(150);     // redundunt, for testing purposes only
@@ -38,5 +38,5 @@ void loop() {
   
   Serial.println("tack; ");
   myMotor->run(RELEASE);      // stopped
-  myMotor->setSpeed(150);*/
+  myMotor->setSpeed(150);
 }
