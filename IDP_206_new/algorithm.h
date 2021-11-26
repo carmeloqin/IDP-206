@@ -21,8 +21,12 @@ namespace algo {
     }
   } phase_1; // Find the dummy phase
 
+  bool phase_1_stop() {
+    return phase_1.stop();
+  }
+
   void getFirstDummy() {
-    line_follower.run(FORWARD, [phase_1](){return phase_1.stop();});
+    line_follower.run(FORWARD, phase_1_stop);
 
     indicator::indicate(last_dummy_found);
     delay(1000);
