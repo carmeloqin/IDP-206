@@ -5,7 +5,8 @@ void setup() {
   Serial.begin(9600);
   Serial.println("\t");
   pinMode(A0, INPUT); // analog pin
-  pinMode(2, INPUT); // digital pin
+  pinMode(4, INPUT); // digital pin
+  pinMode(5, INPUT);
   prev_reading = analogRead(A0);
 }
 
@@ -13,5 +14,7 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  digitalCode();
+  Serial.println("PIN NUMBER 4:  ");
+  digitalCode(4);
+  digitalCode(5);
 }

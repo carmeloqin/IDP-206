@@ -9,13 +9,18 @@ probs will go through comparator and provide a digital signal
 on the final circuit board.
 */
 
+int opto0 = 0;
+int opto1 = 0;
+int opto2 = 0;
+int opto3 = 0;
+int state = 0;
+int threshold = 23;
 
 void setup() {
   pinMode(A2, INPUT);
   pinMode(A3, INPUT);
   pinMode(A4, INPUT);
   pinMode(A5, INPUT);
-  //pinMode(A2, INPUT);
   Serial.begin(9600);
   Serial.println("OP704 Test");
 
@@ -23,15 +28,19 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  int opto0 = analogRead(A2);
+  int opto1 = analogRead(A3);
+  int opto2 = analogRead(A4);
+  int opto3 = analogRead(A5);
 
-  Serial.print(analogRead(A2));
-  Serial.print('\t');
-  Serial.print(analogRead(A3));
-  Serial.print('\t');
-  Serial.print(analogRead(A4));
-  Serial.print('\t');
-  Serial.println(analogRead(A5));
-
+  Serial.println(opto0);
+//  Serial.print('\t');
+//  Serial.print(opto1);
+//  Serial.print('\t');
+//  Serial.print(opto2);
+//  Serial.print('\t');
+//  Serial.println(opto3);
+  //Serial.println(opto2);
   
   delay(100);
 }
