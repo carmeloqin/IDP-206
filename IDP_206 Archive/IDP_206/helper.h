@@ -108,18 +108,15 @@ bool isGettingOnLineFront() {
   
 }
 
-bool isWithinRangeUltraSonic(int low, int high) {
-  int d = sensors::getDistanceUltraSonic();
-  return low < d && d < high;
-}
-
-bool isWithinRangeIR(int low, int high) {
-  int d = sensors::getDistanceIR();
-  return low < d && d < high;
-}
-
 bool isDummyFound() {
-  byte flag = sensors::findDummy();
-  return !(flag == NO_DUMMY) && isWithinRangeUltraSonic(40, 60);
+  return false;
+}
+
+bool isWithinRangeUltraSonic(int range) {
+  return sensors::getDistanceUltraSonic() < range;
+}
+
+bool isWithinRangeIR(int range) {
+  return sensors::getDistanceIR() < range;
 }
 #endif

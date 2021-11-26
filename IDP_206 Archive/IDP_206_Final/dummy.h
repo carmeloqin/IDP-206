@@ -7,7 +7,7 @@ namespace dummy {
   int identifyDummy(int repeat = 3) {
     int sum;
     for (int i = 0; i < repeat; i++) {
-      sum += sensors::getIRPhototransitorCounts(leftIRPhototransitorPin);// todo
+      sum += getIRPhototransitorCounts();// todo
     }
     
     int average = sum / repeat;

@@ -57,7 +57,6 @@ namespace motors {
 
   void begin() {
     AFMS.begin();
-    moving = false;
   }
 }
 

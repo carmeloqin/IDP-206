@@ -17,6 +17,8 @@ int state = 0;
 int threshold = 23;
 
 void setup() {
+  pinMode(A0, INPUT);
+  pinMode(A1, INPUT);
   pinMode(A2, INPUT);
   pinMode(A3, INPUT);
   pinMode(A4, INPUT);
@@ -28,12 +30,12 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  int opto0 = analogRead(A2);
+  int opto0 = analogRead(A4);
   int opto1 = analogRead(A3);
   int opto2 = analogRead(A4);
   int opto3 = analogRead(A5);
 
-  Serial.println(opto0);
+  Serial.println(opto2);
 //  Serial.print('\t');
 //  Serial.print(opto1);
 //  Serial.print('\t');

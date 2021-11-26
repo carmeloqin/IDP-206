@@ -2,12 +2,12 @@
 #define VARIABLES_H
 
 // Pins
-const int frontLeftPin = A3;
-const int frontRightPin = A2;
-const int backRightPin = A5;
-const int backLeftPin = A4;
-const int IRDistancePin = A1;
-const int IRDistancePin2 = A0;
+const int frontLeftPin = A0;
+const int frontRightPin = A1;
+const int backRightPin = A2;
+const int backLeftPin = A3;
+const int IRDistancePin = A4;
+const int IRDistancePin2 = A5;
 
 const int ultraSonicPingPin = 2;
 const int ultraSonicEchoPin = 3;
@@ -19,6 +19,26 @@ const int greenLEDPin = 8;
 const int amberLEDPin = 9;
 const int redLEDPin = 10;
 const int speakerPin = 11;
+const int startButtonPin = 13;
+
+// Updated
+const int frontLeftPin = A0;
+const int frontRightPin = A1;
+const int IRDistancePin = A2;
+const int amberLEDPin = A3;
+const int greenLEDPin = A4;
+const int amberLEDPin = A5;
+
+const int ultraSonicPingPin = 8;
+const int ultraSonicEchoPin = 9;
+const int leftIRPhototransitorPin = 4;
+const int rightIRPhototransitorPin = 5;
+const int leftEncoderPin = 6;
+const int rightEncoderPin = 7;
+const int backLeftPin = 2;
+const int backRightPin = 3;
+//const int redLEDPin = 10;
+//const int speakerPin = 11;
 const int startButtonPin = 13;
 
 // PID
@@ -59,7 +79,6 @@ const byte WHITE_DUMMY = 0;
 const byte RED_DUMMY = 1;
 const byte BLUE_DUMMY = 2;
 const byte NO_DUMMY = 3;
-byte last_dummy_found = NO_DUMMY;
 
 // Global
 bool moving;

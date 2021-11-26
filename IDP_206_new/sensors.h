@@ -3,12 +3,8 @@
 
 #include "Arduino.h"
 #include "variables.h"
-//#include <SharpIR.h>
 
 namespace sensors {
-//  SharpIR IR1(SharpIR::GP2Y0A02YK0F, IRDistancePin);
-//  SharpIR IR2(SharpIR::GP2Y0A21YK0F, IRDistancePin);
-  
   int analogReadAverage(int pin, int times = 3) {
     int sum = 0;
     for (int i=0; i<times; i++) {
@@ -25,32 +21,42 @@ namespace sensors {
     delayMicroseconds(10);
     digitalWrite(ultraSonicPingPin, LOW);
     duration = pulseIn(ultraSonicEchoPin, HIGH);
-//    Serial.println(duration);
     mm = 10 * duration / 29 / 2;
-    delay(50);
     return mm;
   }
 
-  int getDistanceIR(byte flag = 0) {
-//    switch (flag) {
-//      case 0:
-//        return IR1.getDistance();
-//      case 1:
-//        return IR2.getDistance();
-//    }
+  int getDistanceIR(byte flag = 0) {}
+
+  int getIRPhototransitorCountsPeriods(int pin, int periods = 10) {
+    unsigned long timeout = PULSE_LENGTH * periods;
+    int count = 0;
+    unsigned long start = micros();
+    bool current_state;
+    
+    bool last_state = digitalRead(pin);
+    while (micros() - start < timeout) {
+      current_state = digitalRead(pin);
+      if (!current_state && last_state) {
+        count++;
+      }
+      last_state = current_state;
+    }
+    return count;
   }
 
-  int getIRPhototransitorCounts(int pin, int timeout = 100) {
+  int getIRPhototransitorCounts(int pin, int period = 100) {
     int count = 0;
-    unsigned long prevtime = millis();
+    unsigned long start = millis();
     bool state = false;
-    int reading;
-    while (millis() - prevtime <= timeout){ // rollover issue to solve
+    bool reading;
+    while (millis() - start <= period){ // rollover issue to solve
       reading = digitalRead(pin);
-      if (reading == HIGH && state == false){
+      if (reading && !state){
+        // Reading is high, state is LOW
         state = true;
       }
-      if (reading == LOW && state == true){
+      if (!reading && state){
+        // Reading is low; state is HIGH
         state = false;
         count += 1;  
       }
@@ -100,32 +106,40 @@ namespace sensors {
   
   LightValues getLightValues() {
     last_l_value = current_l_value;
-//    current_l_value.front_left = analogReadAverage(frontLeftPin);
-    current_l_value.front_left = 0;
+    current_l_value.front_left = analogReadAverage(frontLeftPin);
     current_l_value.front_right = analogReadAverage(frontRightPin);
-    current_l_value.back_right = analogReadAverage(backRightPin);
-    current_l_value.back_left = analogReadAverage(backLeftPin);
+   
+//    current_l_value.back_right = analogReadAverage(backRightPin);
+//    current_l_value.back_left = analogReadAverage(backLeftPin);
 
-    Serial.print(current_l_value.front_left);
-    Serial.print('\t');
-    Serial.print(current_l_value.front_right);
-    Serial.print('\t');
-    Serial.print(current_l_value.back_right);
-    Serial.print('\t');
-    Serial.println(current_l_value.back_left);
-    delay(25);
+//New 26/11/2021
+    if(digitalRead(backRightPin)) {
+      current_l_value.back_right = 1023;
+    } else current_l_value.back_right = 0;
+
+    if (digitalRead(backLeftPin)) {
+      current_l_value.back_left = 1023;
+    } else current_l_value.back_left = 0;
     return current_l_value;
-  }
+  } 
 
-  bool isStartButtonPressed() {
-    bool pressed = !digitalRead(startButtonPin);
-    delay(25);
-    return pressed; //1 is button not pressed, 0 is button pressed
+  LightValues getLightValuesDerivative() {
+    LightValues l_derivative = LightValues();
+    LightValues l_value = getLightValues();
+
+    l_derivative.front_left = l_value.front_left - last_l_value.front_left;
+    l_derivative.front_right = l_value.front_right - last_l_value.front_right;
+    l_derivative.back_left = l_value.back_left - last_l_value.back_left;
+    l_derivative.back_right = l_value.back_right - last_l_value.back_right;
+
+    return l_derivative;
   }
 
   void begin() {
     pinMode(frontLeftPin, INPUT);
     pinMode(frontRightPin, INPUT);
+    pinMode(backRightPin, INPUT);
+    pinMode(backLeftPin, INPUT);
     pinMode(ultraSonicPingPin, OUTPUT);
     pinMode(ultraSonicEchoPin, INPUT);
     pinMode(startButtonPin, INPUT_PULLUP);
