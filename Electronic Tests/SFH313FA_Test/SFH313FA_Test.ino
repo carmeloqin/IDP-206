@@ -14,7 +14,10 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  Serial.println("PIN NUMBER 4:  ");
+//  Serial.println("PIN NUMBER 4:  ");
   digitalCode(4);
   digitalCode(5);
+//  Serial.print(digitalRead(4));
+//  Serial.print('\t');
+//  Serial.println(digitalRead(5));
 }
