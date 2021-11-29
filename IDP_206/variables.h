@@ -2,23 +2,45 @@
 #define VARIABLES_H
 
 // Pins
-const int frontLeftPin = A3;
-const int frontRightPin = A2;
-const int backRightPin = A5;
-const int backLeftPin = A4;
-const int IRDistancePin = A1;
-const int IRDistancePin2 = A0;
+//const int frontLeftPin = A3;
+//const int frontRightPin = A2;
+//const int backRightPin = A5;
+//const int backLeftPin = A4;
+//const int IRDistancePin = A1;
+//const int IRDistancePin2 = A0;
+//
+//const int ultraSonicPingPin = 2;
+//const int ultraSonicEchoPin = 3;
+//const int leftIRPhototransitorPin = 4;
+//const int rightIRPhototransitorPin = 5;
+//const int leftEncoderPin = 6;
+//const int rightEncoderPin = 7;
+//const int greenLEDPin = 8;
+//const int amberLEDPin = 9;
+//const int redLEDPin = 10;
+//const int speakerPin = 11;
+//const int startButtonPin = 13;
 
-const int ultraSonicPingPin = 2;
-const int ultraSonicEchoPin = 3;
+
+// Pins (28/11)
+const int frontLeftPin = A0;
+const int frontRightPin = A1;
+const int backRightPin = A2;
+const int backLeftPin = A3;
+const int IRDistancePin = A4;
+const int IRDistancePin2 = A5;
+
+const int leftEncoderPin = 2;   // Interrupts can only be on pin2/3
+const int rightEncoderPin = 3;
 const int leftIRPhototransitorPin = 4;
 const int rightIRPhototransitorPin = 5;
-const int leftEncoderPin = 6;
-const int rightEncoderPin = 7;
-const int greenLEDPin = 8;
-const int amberLEDPin = 9;
-const int redLEDPin = 10;
-const int speakerPin = 11;
+const int amberLEDPin = 6;
+const int greenLEDPin = 7;
+const int redLEDPin = 8;
+const int grabberServoPin = 9; // Servos can only be pin 9/10
+const int lifterServoPin = 10;
+const int ultraSonicPingPin = 11;
+const int ultraSonicEchoPin = 12;
 const int startButtonPin = 13;
 
 // PID
