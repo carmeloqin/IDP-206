@@ -22,24 +22,44 @@
 //const int startButtonPin = 13;
 
 //NEW PINS (26/11)
+//const int frontLeftPin = A0;
+//const int frontRightPin = A1;
+//const int IRDistancePin = A2;
+//const int backLeftPin = 2;
+//const int backRightPin = 3;
+//
+//const int ultraSonicPingPin = 8;
+//const int ultraSonicEchoPin = 9;
+//const int leftIRPhototransitorPin = 4;
+//const int rightIRPhototransitorPin = 5;
+//const int leftEncoderPin = 6;
+//const int rightEncoderPin = 7;
+//const int amberLEDPin = A3;
+//const int greenLEDPin = A4;
+//const int redLEDPin = A5;
+//
+////const int redLEDPin = 10;
+////const int speakerPin = 11;
+//const int startButtonPin = 13;
+
+// Pins (28/11)
 const int frontLeftPin = A0;
 const int frontRightPin = A1;
-const int IRDistancePin = A2;
-const int backLeftPin = 2;
-const int backRightPin = 3;
+const int backRightPin = A2;
+const int backLeftPin = A3;
+const int IRDistancePin = A4;
+const int IRDistancePin2 = A5;
 
-const int ultraSonicPingPin = 8;
-const int ultraSonicEchoPin = 9;
+const int leftEncoderPin = 2;   // Interrupts can only be on pin2/3
+const int rightEncoderPin = 3;
 const int leftIRPhototransitorPin = 4;
 const int rightIRPhototransitorPin = 5;
-const int leftEncoderPin = 6;
-const int rightEncoderPin = 7;
-const int amberLEDPin = A3;
-const int greenLEDPin = A4;
-const int redLEDPin = A5;
-
-//const int redLEDPin = 10;
-//const int speakerPin = 11;
+const int ultraSonicPingPin = 6;
+const int ultraSonicEchoPin = 7;
+const int redLEDPin = 8;
+const int greenLEDPin = 9;
+const int amberLEDPin = 10;
+const int speakerPin = 11;
 const int startButtonPin = 13;
 
 // PID
@@ -84,6 +104,21 @@ byte last_dummy_found = NO_DUMMY;
 
 // Phototransitor
 unsigned long PULSE_LENGTH = 6000;
+
+// IR Distance Sensor GP2Y0A21YK0F
+#include <SharpIR.h>
+#define IRDistanceSensorModel 1080
+/* Model :
+  GP2Y0A02YK0F --> 20150
+  GP2Y0A21YK0F --> 1080
+  GP2Y0A710K0F --> 100500
+  GP2YA41SK0F --> 430
+*/
+int IRDistance_cm = 0;
+
+// Encoders
+int leftEncoderCount = 0;
+int rightEncoderCount = 0;
 
 // Global
 bool moving;

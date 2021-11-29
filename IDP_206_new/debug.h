@@ -2,10 +2,12 @@
 #define DEBUG_H
 
 #include "sensors.h"
+#include "indicator.h"
+
 
 namespace debug {
   void plotLightValues() {
-    Serial.println("FL\tFR\tBR\tBL");
+    Serial.println("FL\tFR\tBL\tBR");
 
     while(true) {
       LightValues l_value = sensors::getLightValues();
@@ -14,9 +16,9 @@ namespace debug {
       Serial.print('\t');
       Serial.print(l_value.front_right);
       Serial.print('\t');
-      Serial.print(l_value.back_right);
+      Serial.print(l_value.back_left);
       Serial.print('\t');
-      Serial.println(l_value.back_left);
+      Serial.println(l_value.back_right);
 
       delay(50);
     }
@@ -98,6 +100,50 @@ namespace debug {
       delay(50);
     }
   }
+
+  void indicatorTest() {
+    while(true){
+      indicator::moving();
+      Serial.println("MOVING");
+      delay(2000);
+      indicator::indicate(WHITE_DUMMY);
+      Serial.println("White Dummy");
+      delay(2000);
+      indicator::indicate(RED_DUMMY);
+      Serial.println("Red Dummy");
+      delay(2000);
+      indicator::indicate(BLUE_DUMMY);
+      Serial.println("Blue Dummy");
+      delay(2000);
+      indicator::indicate(NO_DUMMY);
+      Serial.println("No Dummy");
+      delay(2000);
+      indicator::stopped();
+      Serial.println("STOPPED");
+      delay(2000);
+    }
+  }
+
+  void getDistanceIRTest() {
+    while(true) {
+      Serial.print("Distance in cm: ");
+      Serial.println(sensors::getDistanceIR());
+      delay(100);
+    }
+  }
+
+  void trackEncoderCountTest() {
+    //https://forum.arduino.cc/t/using-interrupts-with-uno-wifi-rev2/569016/2
+    while(true) {
+      Serial.print("Left Encoder: ");
+      Serial.print(leftEncoderCount);
+      Serial.print('\t');
+      Serial.print("Right Encoder: ");
+      Serial.println(rightEncoderCount);
+      delay(100);
+    }  
+  }
+  
 }
 
 #endif

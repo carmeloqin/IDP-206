@@ -56,6 +56,7 @@ namespace motors {
   }
 
   void begin() {
+    Serial.println("Initializing Motors... ");
     AFMS.begin();
     moving = false;
   }

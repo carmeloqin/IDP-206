@@ -4,7 +4,7 @@
 // Include the library:
 #include <SharpIR.h>
 // Define model and input pin:
-#define IRPin A0
+#define IRPin A5
 #define model 1080
 // Create variable to store the distance:
 int distance_cm;

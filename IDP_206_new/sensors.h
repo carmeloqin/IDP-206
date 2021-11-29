@@ -4,6 +4,14 @@
 #include "Arduino.h"
 #include "variables.h"
 
+// IR Distance
+#include <SharpIR.h>
+SharpIR IRDistanceSensor = SharpIR(IRDistancePin, IRDistanceSensorModel);
+// Moved declaration here cuz if I put it in sensors.begin it says
+// " 'IRDistanceSensor' was not declared in this scope "
+
+
+
 namespace sensors {
   int analogReadAverage(int pin, int times = 3) {
     int sum = 0;
@@ -26,7 +34,11 @@ namespace sensors {
     return mm;
   }
 
-  int getDistanceIR(byte flag = 0) {}
+  int getDistanceIR(byte flag = 0) {
+    IRDistance_cm = IRDistanceSensor.distance();
+    return IRDistance_cm;
+    
+  }
 
   int getIRPhototransitorCountsPeriods(int pin, int periods = 10) {
     unsigned long timeout = PULSE_LENGTH * periods;
@@ -112,17 +124,18 @@ namespace sensors {
     current_l_value.front_left = analogReadAverage(frontLeftPin);
     current_l_value.front_right = analogReadAverage(frontRightPin);
    
-//    current_l_value.back_right = analogReadAverage(backRightPin);
-//    current_l_value.back_left = analogReadAverage(backLeftPin);
+    current_l_value.back_right = analogReadAverage(backRightPin);
+    current_l_value.back_left = analogReadAverage(backLeftPin);
 
-//New 26/11/2021
-    if(digitalRead(backRightPin)) {
-      current_l_value.back_right = 1023;
-    } else current_l_value.back_right = 0;
+//New 26/11/2021, Commented on 28/11/2021
+//    if(digitalRead(backRightPin)) {
+//      current_l_value.back_right = 1023;
+//    } else current_l_value.back_right = 0;
+//
+//    if (digitalRead(backLeftPin)) {
+//      current_l_value.back_left = 1023;
+//    } else current_l_value.back_left = 0;
 
-    if (digitalRead(backLeftPin)) {
-      current_l_value.back_left = 1023;
-    } else current_l_value.back_left = 0;
     return current_l_value;
   } 
 
@@ -138,7 +151,21 @@ namespace sensors {
     return l_derivative;
   }
 
+  // Simple function not considering the direction
+  // Add direction in when motor working
+  // Use motor's input input signal (forward/backwards)
+  // as the direction.
+  // Also should investigate whether encoder(0) and encoder(1)
+  // Could work in the attach interrupt line.
+  void encoderLeft() {
+    leftEncoderCount += 1;
+  }
+  void encoderRight() {
+    rightEncoderCount += 1;
+  }
+
   void begin() {
+    Serial.println("Initializing Sensors... ");
     pinMode(frontLeftPin, INPUT);
     pinMode(frontRightPin, INPUT);
     pinMode(backRightPin, INPUT);
@@ -146,6 +173,14 @@ namespace sensors {
     pinMode(ultraSonicPingPin, OUTPUT);
     pinMode(ultraSonicEchoPin, INPUT);
     pinMode(startButtonPin, INPUT_PULLUP);
+    pinMode(IRDistancePin, INPUT);
+
+    // Create a new instance of the SharpIR class:
+    //SharpIR IRDistanceSensor = SharpIR(IRDistancePin, IRDistanceSensorModel);
+    // didn't work, error as seen in above declaration
+
+    attachInterrupt(digitalPinToInterrupt(2), encoderLeft, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(3), encoderRight, CHANGE);
   }
 }
 #endif

@@ -33,6 +33,16 @@ namespace indicator {
   void stopped() {
     digitalWrite(amberLEDPin, LOW);
   }
+
+  void begin() {
+    Serial.println("Initializing Indicators... ");
+    pinMode(amberLEDPin, OUTPUT);
+    pinMode(redLEDPin, OUTPUT);
+    pinMode(greenLEDPin, OUTPUT);
+
+    
+  }
+  
 }
 
 #endif
