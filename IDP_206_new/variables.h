@@ -54,13 +54,13 @@ const int leftEncoderPin = 2;   // Interrupts can only be on pin2/3
 const int rightEncoderPin = 3;
 const int leftIRPhototransitorPin = 4;
 const int rightIRPhototransitorPin = 5;
-const int amberLEDPin = 6;
-const int greenLEDPin = 7;
+const int ultraSonicPingPin = 6;
+const int ultraSonicEchoPin = 7;
 const int redLEDPin = 8;
 const int grabberServoPin = 9; // Servos can only be pin 9/10
 const int lifterServoPin = 10;
-const int ultraSonicPingPin = 11;
-const int ultraSonicEchoPin = 12;
+const int greenLEDPin = 11;
+const int amberLEDPin = 12;
 const int startButtonPin = 13;
 
 //speakerPin not installed cuz out of pins
