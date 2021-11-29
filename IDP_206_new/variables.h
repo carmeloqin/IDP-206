@@ -57,10 +57,13 @@ const int rightIRPhototransitorPin = 5;
 const int ultraSonicPingPin = 6;
 const int ultraSonicEchoPin = 7;
 const int redLEDPin = 8;
-const int greenLEDPin = 9;
-const int amberLEDPin = 10;
-const int speakerPin = 11;
+const int grabberServoPin = 9; // Servos can only be pin 9/10
+const int lifterServoPin = 10;
+const int greenLEDPin = 11;
+const int amberLEDPin =12;
 const int startButtonPin = 13;
+
+//speakerPin not installed cuz out of pins
 
 // PID
 int KP = 5;

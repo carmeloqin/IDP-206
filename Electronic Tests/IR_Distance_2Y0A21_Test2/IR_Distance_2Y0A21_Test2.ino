@@ -1,10 +1,10 @@
-#include <SharpIR.h>
+
 
 /*SHARP GP2Y0A21YK0F IR distance sensor with Arduino and SharpIR library example code. More info: https://www.makerguides.com */
 // Include the library:
 #include <SharpIR.h>
 // Define model and input pin:
-#define IRPin A5
+#define IRPin A0
 #define model 1080
 // Create variable to store the distance:
 int distance_cm;

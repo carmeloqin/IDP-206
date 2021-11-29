@@ -23,10 +23,10 @@ void loop() {
 //    debug::findDummy();
 //    debug::plotIRPhototransitorCounts();
 //    debug::findDummyaa();
-//    debug::plotDistanceUltraSonic();
+    debug::plotDistanceUltraSonic();
 
 //    debug::indicatorTest();
 //    debug::getDistanceIRTest();
-      debug::trackEncoderCountTest();
+//    debug::trackEncoderCountTest();
   }
 }
