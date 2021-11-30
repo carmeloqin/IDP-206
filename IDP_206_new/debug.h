@@ -143,7 +143,10 @@ namespace debug {
       delay(100);
     }  
   }
-  
+
+  void debugGeneral() {
+    motors::runLeft(FORWARD);
+  }
 }
 
 #endif

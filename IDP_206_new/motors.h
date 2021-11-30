@@ -39,6 +39,7 @@ namespace motors {
         motor->setSpeed(0);
         indicator::stopped();
         moving = false;
+        break;
       case FORWARD:
       case BACKWARD:
         indicator::moving();

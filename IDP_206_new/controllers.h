@@ -7,7 +7,7 @@
 #include "sensors.h"
 #include "conditionals.h"
 
-namespace controller {
+namespace controllers {
   class PID {
     private:
       int last_error = 0;
@@ -57,7 +57,7 @@ namespace controller {
         PID pid {};
         motors::runLeft(flag);
         motors::runRight(flag);
-  
+        delay(250); //todo remove
         for (int i = 0; i < repeat; i++) {
           while (!isDone()) {
             if (!conditionals::isOnLineFront()) {
@@ -145,7 +145,7 @@ namespace controller {
   };
 }
 
-controller::LineFollower line_follower = controller::LineFollower();
-controller::SimpleController simple_controller = controller::SimpleController();
+controllers::LineFollower line_follower = controllers::LineFollower();
+controllers::SimpleController simple_controller = controllers::SimpleController();
 
 #endif

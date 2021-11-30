@@ -27,16 +27,16 @@ void setup() {
 }
 
 void loop() {
-  Serial.print("tick ");
-  
-  myMotor->run(FORWARD);      // turn it on going forward
-  myMotor->setSpeed(150);     // redundunt, for testing purposes only
-
-  Serial.print("tock ");
-  myMotor->run(BACKWARD);     // the other way
-  myMotor->setSpeed(150);
-  
-  Serial.println("tack; ");
-  myMotor->run(RELEASE);      // stopped
-  myMotor->setSpeed(150);
+//  Serial.print("tick ");
+//  
+//  myMotor->run(FORWARD);      // turn it on going forward
+//  myMotor->setSpeed(150);     // redundunt, for testing purposes only
+//
+//  Serial.print("tock ");
+//  myMotor->run(BACKWARD);     // the other way
+//  myMotor->setSpeed(150);
+//  
+//  Serial.println("tack; ");
+//  myMotor->run(RELEASE);      // stopped
+//  myMotor->setSpeed(150);
 }
