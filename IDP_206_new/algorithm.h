@@ -69,7 +69,7 @@ namespace algo {
   }
   
   void toBaseFromRed() {
-    simple_controller.rotate(ANTICLOCKWISE, conditionals::foundLineWhileRotateACW, 2);
+    simple_controller.rotate(ANTICLOCKWISE, conditionals::foundLineWhileRotateACW, 1);
 
     line_follower.run(FORWARD, conditionals::isArrivingJunctionFront);
     line_follower.run(FORWARD, conditionals::isArrivingJunctionBack, 1, [](){delay(500);}); // go further into the box for 500ms
@@ -131,13 +131,15 @@ namespace algo {
     // go slow to identify the dummy
     line_follower.run(FORWARD, conditionals::isDummyDetected, 1, [](){}, 100);
 
-    line_follower.run(FORWARD, conditionals::isDummyFound2, 1, [](){}, 100);
+//    line_follower.run(FORWARD, conditionals::isDummyFound2, 1, [](){}, 100);
   }
 
   
 
   void rescueLineDummy() {
-    line_follower.run(FORWARD, conditionals::isArrivingJunctionBack, 2);
+//    line_follower.run(FORWARD, conditionals::isArrivingJunctionBack, 2);
+
+    Serial.println("1");
 
     line_follower.run(FORWARD, conditionals::isDummyFound);
     delay(1000);
@@ -147,8 +149,7 @@ namespace algo {
 
     // identify the dummy
     goSlow();
-    
-//    last_dummy_found = RED_DUMMY;
+//    last_dummy_found = WHITE_DUMMY;
     indicator::indicate(last_dummy_found);
 
     // grab the dummy

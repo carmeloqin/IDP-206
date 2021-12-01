@@ -7,12 +7,12 @@
 
 namespace debug {
   void plotLightValues() {
-    
+    Serial.println("FL\tFR\tBL\tBR");
 
     while(true) {
       LightValues l_value = sensors::getLightValues();
 
-      Serial.println("FL\tFR\tBL\tBR");
+      
       Serial.print(l_value.front_left);
       Serial.print('\t');
       Serial.print(l_value.front_right);

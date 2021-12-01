@@ -89,8 +89,8 @@ const byte ANTICLOCKWISE = 2;
 
 // Line sensors
 const int WHITE = 150; //todo, front/back threshold different!
-const int WHITEFRONT = 40;
-const int WHITEBACK = 150;
+const int WHITEFRONT = 100;
+const int WHITEBACK = 450;
 const int BLACK = 750;
 const int THRESHOLD = 20;
 

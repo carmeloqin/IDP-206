@@ -68,6 +68,9 @@ namespace conditionals {
   
   bool isArrivingJunctionBack() {
     readBackValues();
+    if (curr_at_junction_back && !prev_at_junction_back){
+      Serial.println("junction");
+    }
     return curr_at_junction_back && !prev_at_junction_back;
   }
   
@@ -125,25 +128,25 @@ namespace conditionals {
   }
 
   bool isDummyDetected() {
-    return sensors::findDummy() != NO_DUMMY || isWithinRangeUltraSonic(1, 45);
+    return sensors::findDummy() != NO_DUMMY || isWithinRangeUltraSonic(1, 40);
   }
   
   bool isDummyFound1() {
     byte flag = sensors::findDummy();
-    bool found = !(flag == NO_DUMMY) && isWithinRangeUltraSonic(1, 50);
+    bool found = !(flag == NO_DUMMY) && isWithinRangeUltraSonic(1, 35);
 //    Serial.println(found);
     return found;
   }
 
   bool isDummyFound() {
 //    byte flag = sensors::findDummy();
-    bool found = isWithinRangeUltraSonic(1, 70); //changed it to 100
+    bool found = isWithinRangeUltraSonic(1, 100); //changed it to 100
 //    Serial.println(found);
     return found;
   }
 
   bool isDummyFound2() {
-    return isWithinRangeUltraSonic(50, 1000);
+    return isWithinRangeUltraSonic(35, 1000);
   }
 
     bool isDummyInRange() { //new, todo
