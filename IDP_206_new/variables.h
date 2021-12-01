@@ -85,8 +85,8 @@ const byte CLOCKWISE = 1;
 const byte ANTICLOCKWISE = 2;
 
 // Line sensors
-const int WHITE = 200;
-const int BLACK = 900;
+const int WHITE = 150; //todo, front/back threshold different!
+const int BLACK = 750;
 const int THRESHOLD = 20;
 
 struct LightValues {

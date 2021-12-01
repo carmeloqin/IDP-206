@@ -9,20 +9,22 @@
 
 namespace algo {
   unsigned long start;
-  unsigned long timeout = 2000;
+  unsigned long timeout = 1700;
   struct {
       int junctions_arrived = 0;
     
       bool stop() {
-        if (junctions_arrived < 2) {
+        if (junctions_arrived < 1) {
           if (conditionals::isArrivingJunctionBack()) {
             junctions_arrived++;
+            Serial.print("[algo finding_phase]Junction Arrived: ");
             Serial.println(junctions_arrived);
           }
           return false;
         }
         bool found = conditionals::isDummyFound();
-        Serial.println(found);
+//        Serial.print("Dummy Found: ");
+//        Serial.println(found);
         return found;
       }
     } finding_phase;
@@ -53,8 +55,10 @@ namespace algo {
     if (flag == WHITE_DUMMY) {
       start = millis();
       simple_controller.run(FORWARD, [start](){return millis() - start > 250;});
+      Serial.println("[algo::dropOff]Dummy being dropped off"); //todo
       servos::dropOff();
-      simple_controller.rotate(CLOCKWISE, conditionals::foundLineWhileRotateCW, 2);
+      Serial.println("[algo::dropOff]Dummy dropped off"); //todo
+      simple_controller.rotate(CLOCKWISE, conditionals::foundLineWhileRotateCW, 1);
     } else {
       start = millis();
       simple_controller.run(BACKWARD, [start](){return millis() - start > 250;});
@@ -85,14 +89,21 @@ namespace algo {
 
   void getLineDummy() {
     findDummy(); // Going forward until it finds a dummy
-
-    // identify dummy here
+    Serial.println("[algo::getLineDummy]Dummy Found"); //todo
+    delay(2000);
+    
+    // TODO identify dummy here
+    
     indicator::indicate(last_dummy_found);
 
+    // Grab dummy
+    Serial.println("[algo::getLineDummy]Dummy being grabbed"); //todo
     servos::pickUp();
+    Serial.println("[algo::getLineDummy]Dummy grabbed"); //todo    
     
-    // Grab dummy here
-    dropOff(WHITE_DUMMY);    
+    dropOff(WHITE_DUMMY);  // WHITE TO TEST IT  
+
+    
     
 //    simple_controller.rotate(CLOCKWISE, conditionals::foundLineWhileRotateCW);
 //    

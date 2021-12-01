@@ -53,7 +53,7 @@ namespace controllers {
       void run(byte flag, bool isDone(), int repeat = 1,
                void done() = [](){},
                int power = averagePower,
-               void error() = [](){Serial.println("Error! Vehicle is off the line!");}) {
+               void error() = [](){Serial.println("[controllers]Error! Vehicle is off the line!");}) {
         PID pid {};
         motors::runLeft(flag);
         motors::runRight(flag);
@@ -88,7 +88,7 @@ namespace controllers {
       void run(byte flag, bool isDone(), int repeat = 1,
                void done() = [](){},
                int power = averagePower,
-               void error() = [](){Serial.println("Error! Vehicle is not moving!");}) {
+               void error() = [](){Serial.println("[controllers]Error! Vehicle is not moving!");}) {
         motors::runLeft(flag);
         motors::runRight(flag);
         motors::setMotorsSpeed(0, power);
@@ -115,12 +115,12 @@ namespace controllers {
                   void error() = [](){Serial.println("Error! Vehicle is not rotating!");}) {
         switch (flag) {
           case CLOCKWISE:
-            motors::runLeft(FORWARD);
-            motors::runRight(BACKWARD);
-            break;
-          case ANTICLOCKWISE:
             motors::runLeft(BACKWARD);
             motors::runRight(FORWARD);
+            break;
+          case ANTICLOCKWISE:
+            motors::runLeft(FORWARD);
+            motors::runRight(BACKWARD);
             break;
         }
         motors::setMotorsSpeed(0, power); // turning = 0

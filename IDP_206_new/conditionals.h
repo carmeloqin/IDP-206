@@ -4,7 +4,7 @@
 #include "sensors.h"
 
 namespace conditionals {
-  const int DERIVATIVE_THRESHOLD = 600;
+  const int DERIVATIVE_THRESHOLD = 400;
   bool curr_at_junction_front = false;
   bool prev_at_junction_front = false;
   bool curr_at_junction_back = false;
@@ -121,7 +121,14 @@ namespace conditionals {
 
   bool isDummyFound() {
 //    byte flag = sensors::findDummy();
-    bool found = isWithinRangeUltraSonic(65, 80);
+    bool found = isWithinRangeUltraSonic(65, 100); //changed it to 100
+//    Serial.println(found);
+    return found;
+  }
+
+    bool isDummyInRange() { //new, todo
+//    byte flag = sensors::findDummy();
+    bool found = isWithinRangeUltraSonic(65, 80); //will change this range, control car to this range.
 //    Serial.println(found);
     return found;
   }

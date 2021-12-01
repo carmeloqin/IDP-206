@@ -30,7 +30,7 @@ namespace sensors {
     digitalWrite(ultraSonicPingPin, LOW);
     duration = pulseIn(ultraSonicEchoPin, HIGH);
     mm = 10 * duration / 29 / 2;
-    Serial.println(mm);
+    //Serial.println(mm); //SerialPrintUltrasonic
     return mm;
   }
 
@@ -127,13 +127,18 @@ namespace sensors {
     current_l_value.back_right = analogReadAverage(backRightPin);
     current_l_value.back_left = analogReadAverage(backLeftPin);
 
-//    Serial.print(current_l_value.front_left);
-//    Serial.print('\t');
-//    Serial.print(current_l_value.front_right);
-//    Serial.print('\t');
-//    Serial.print(current_l_value.back_left);
-//    Serial.print('\t');
-//    Serial.println(current_l_value.back_right);
+    // TAGS
+    // SerialPrintLightValues
+    // SerialPrintLineSensor
+    // SerialPrintOptoSwitch
+
+    Serial.print(current_l_value.front_left);
+    Serial.print('\t');
+    Serial.print(current_l_value.front_right);
+    Serial.print('\t');
+    Serial.print(current_l_value.back_left);
+    Serial.print('\t');
+    Serial.println(current_l_value.back_right);
 
 //New 26/11/2021, Commented on 28/11/2021
 //    if(digitalRead(backRightPin)) {
