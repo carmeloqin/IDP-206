@@ -84,6 +84,7 @@ namespace algo {
 
   void dropOff(byte dummy, bool returnToBaseAfterwards = false) {
     switch (dummy) {
+      case NO_DUMMY:
       case WHITE_DUMMY:
         toWhite();
         break;
@@ -99,6 +100,7 @@ namespace algo {
 
     if (!returnToBaseAfterwards) {
       switch (dummy) {
+        case NO_DUMMY:
         case WHITE_DUMMY:
           toSearchFromWhite();
           break;
@@ -110,7 +112,8 @@ namespace algo {
           break;
       }
     } else {
-      switch (dummy) {]
+      switch (dummy) {
+        case NO_DUMMY:
         case WHITE_DUMMY:
           toBaseFromWhite();
           break;
