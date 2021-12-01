@@ -42,11 +42,11 @@
 ////const int speakerPin = 11;
 //const int startButtonPin = 13;
 
-// Pins (28/11)
-const int frontLeftPin = A0;
-const int frontRightPin = A1;
-const int backRightPin = A2;
-const int backLeftPin = A3;
+// Pins (30/11)
+const int frontLeftPin = A3;
+const int frontRightPin = A2;
+const int backRightPin = A1;
+const int backLeftPin = A0;
 const int IRDistancePin = A4;
 const int IRDistancePin2 = A5;
 
@@ -59,8 +59,8 @@ const int ultraSonicEchoPin = 7;
 const int redLEDPin = 8;
 const int grabberServoPin = 9; // Servos can only be pin 9/10
 const int lifterServoPin = 10;
-const int greenLEDPin = 11;
-const int amberLEDPin = 12;
+const int amberLEDPin = 11;
+const int greenLEDPin = 12;
 const int startButtonPin = 13;
 
 //speakerPin not installed cuz out of pins
@@ -74,6 +74,9 @@ const int tuningFactor = 100;
 // Line follower
 int offset = 0;
 
+// Simple Controller
+int rotateDelay = 150;
+
 // Motors
 int averagePower = 230;
 int defaultDelay = 0;
@@ -85,8 +88,10 @@ const byte CLOCKWISE = 1;
 const byte ANTICLOCKWISE = 2;
 
 // Line sensors
-const int WHITE = 50;
-const int BLACK = 900;
+const int WHITE = 150; //todo, front/back threshold different!
+const int WHITEFRONT = 40;
+const int WHITEBACK = 150;
+const int BLACK = 750;
 const int THRESHOLD = 20;
 
 struct LightValues {
@@ -96,7 +101,7 @@ struct LightValues {
   int back_right;
 } current_l_value, last_l_value;
 
-const unsigned long OFF_LINE_TIMEOUT = 1500;
+const unsigned long OFF_LINE_TIMEOUT = 3000;
 
 // Dummies
 const byte WHITE_DUMMY = 0;

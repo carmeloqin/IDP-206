@@ -7,7 +7,7 @@
 #include "sensors.h"
 #include "conditionals.h"
 
-namespace controller {
+namespace controllers {
   class PID {
     private:
       int last_error = 0;
@@ -53,11 +53,11 @@ namespace controller {
       void run(byte flag, bool isDone(), int repeat = 1,
                void done() = [](){},
                int power = averagePower,
-               void error() = [](){Serial.println("Error! Vehicle is off the line!");}) {
+               void error() = [](){Serial.println("[controllers]Error! Vehicle is off the line!");}) {
         PID pid {};
         motors::runLeft(flag);
         motors::runRight(flag);
-  
+        delay(250); //todo remove
         for (int i = 0; i < repeat; i++) {
           while (!isDone()) {
             if (!conditionals::isOnLineFront()) {
@@ -76,10 +76,10 @@ namespace controller {
             delay(50);
           }
         }
-        
+
+        done();
         motors::runLeft(RELEASE);
         motors::runRight(RELEASE);
-        done();
       }
   };
 
@@ -88,7 +88,7 @@ namespace controller {
       void run(byte flag, bool isDone(), int repeat = 1,
                void done() = [](){},
                int power = averagePower,
-               void error() = [](){Serial.println("Error! Vehicle is not moving!");}) {
+               void error() = [](){Serial.println("[controllers]Error! Vehicle is not moving!");}) {
         motors::runLeft(flag);
         motors::runRight(flag);
         motors::setMotorsSpeed(0, power);
@@ -115,17 +115,17 @@ namespace controller {
                   void error() = [](){Serial.println("Error! Vehicle is not rotating!");}) {
         switch (flag) {
           case CLOCKWISE:
-            motors::runLeft(FORWARD);
-            motors::runRight(BACKWARD);
-            break;
-          case ANTICLOCKWISE:
             motors::runLeft(BACKWARD);
             motors::runRight(FORWARD);
+            break;
+          case ANTICLOCKWISE:
+            motors::runLeft(FORWARD);
+            motors::runRight(BACKWARD);
             break;
         }
         motors::setMotorsSpeed(0, power); // turning = 0
 
-        delay(1000);
+        delay(rotateDelay); // TOCHANGE
         for (int i = 0; i < repeat; i++) {
           while (!isDone()) {
             if (!conditionals::isRotating()) {
@@ -137,7 +137,7 @@ namespace controller {
           } 
         }
 
-        delay(50); // To get back to the centre of the line;
+//        delay(50); // To get back to the centre of the line; //don't need it now
         motors::runLeft(RELEASE);
         motors::runRight(RELEASE);
         done();
@@ -145,7 +145,7 @@ namespace controller {
   };
 }
 
-controller::LineFollower line_follower = controller::LineFollower();
-controller::SimpleController simple_controller = controller::SimpleController();
+controllers::LineFollower line_follower = controllers::LineFollower();
+controllers::SimpleController simple_controller = controllers::SimpleController();
 
 #endif
