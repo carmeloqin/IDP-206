@@ -110,7 +110,7 @@ namespace algo {
           break;
       }
     } else {
-      switch (dummy) {
+      switch (dummy) {]
         case WHITE_DUMMY:
           toBaseFromWhite();
           break;
@@ -128,6 +128,8 @@ namespace algo {
     // go slow to identify the dummy
     line_follower.run(FORWARD, conditionals::isDummyDetected, 1, [](){}, 70);
   }
+
+  
 
   void rescueLineDummy() {
     line_follower.run(FORWARD, conditionals::isArrivingJunctionBack, 2);
