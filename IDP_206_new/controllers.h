@@ -125,7 +125,7 @@ namespace controllers {
         }
         motors::setMotorsSpeed(0, power); // turning = 0
 
-        delay(1000);
+        delay(rotateDelay); // TOCHANGE
         for (int i = 0; i < repeat; i++) {
           while (!isDone()) {
             if (!conditionals::isRotating()) {
@@ -137,7 +137,7 @@ namespace controllers {
           } 
         }
 
-        delay(50); // To get back to the centre of the line;
+//        delay(50); // To get back to the centre of the line; //don't need it now
         motors::runLeft(RELEASE);
         motors::runRight(RELEASE);
         done();
