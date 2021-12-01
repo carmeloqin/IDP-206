@@ -29,14 +29,14 @@ namespace algo {
     toRedBlueJunction();
 
     start = millis();
-    simple_controller.rotate(CLOCKWISE, [start](){return millis() - start > 750;});
+    simple_controller.rotate(CLOCKWISE, [start](){return millis() - start > 2200;});
   }
 
   void toBlue() {
     toRedBlueJunction();
 
     start = millis();
-    simple_controller.rotate(ANTICLOCKWISE, [start](){return millis() - start > 750;});
+    simple_controller.rotate(ANTICLOCKWISE, [start](){return millis() - start > 2200;});
   }
 
   void toSearchFromWhite() {
@@ -127,26 +127,33 @@ namespace algo {
     }
   }
 
-  void goSLow() {
+  void goSlow() {
     // go slow to identify the dummy
-    line_follower.run(FORWARD, conditionals::isDummyDetected, 1, [](){}, 70);
+    line_follower.run(FORWARD, conditionals::isDummyDetected, 1, [](){}, 100);
+
+    line_follower.run(FORWARD, conditionals::isDummyFound2);
   }
 
   
 
   void rescueLineDummy() {
-    line_follower.run(FORWARD, conditionals::isArrivingJunctionBack, 2);
+//    line_follower.run(FORWARD, conditionals::isArrivingJunctionBack, 2);
 
     line_follower.run(FORWARD, conditionals::isDummyFound);
+    delay(1000);
+
+//    line_follower.run(FORWARD, conditionals::isDummyInRange) ;
+
 
     // identify the dummy
-    //goSlow();
-    last_dummy_found = BLUE_DUMMY;
+    goSlow();
+    
+//    last_dummy_found = RED_DUMMY;
     indicator::indicate(last_dummy_found);
 
     // grab the dummy
-    // servos::pickUp();
-    delay(5000);
+    servos::pickUp();
+    //delay(5000);
 
     dropOff(last_dummy_found, true); // true means return to base afterwards. false means search area.
     

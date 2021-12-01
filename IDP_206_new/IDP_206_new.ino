@@ -34,6 +34,9 @@ void loop() {
 //    debug::getDistanceIRTest();
 //    debug::trackEncoderCountTest();
 
+
+//    debug::servoTest();
+
 // DEBUGGING FOR ALGORITHM
 //    algo::findDummy(); //Find with ultrasonic
 
@@ -44,6 +47,7 @@ void loop() {
 
 // FINAL CODE
     algo::rescueLineDummy();
+
 
 
   }

@@ -6,32 +6,37 @@ Servo grabberServo;
 Servo lifterServo;
 
 namespace servos {
+
   int posSpeed = 1;
   
   void openGrabber(){
     for (int pos = 20; pos <= 110; pos += posSpeed) { 
+      //grabberServo.attach(grabberServoPin);
       grabberServo.write(pos);              
-        delay(100);                      
+        delay(30);                      
     }
   }
 
   void closeGrabber(){
     for (int pos = 110; pos >= 20; pos -= posSpeed) {
+      //grabberServo.attach(grabberServoPin);
       grabberServo.write(pos);              
-      delay(100);                       
+      delay(30);                       
     }
   }
 
   void ascendLifter(){
-    for (int pos = 0; pos <= 56; pos += posSpeed) { 
+    for (int pos = 75; pos <= 120; pos += posSpeed) {
+      //lifterServo.attach(lifterServoPin);
       // in steps of 1 degree
       lifterServo.write(pos);              
-        delay(30);                       
+      delay(30);                       
     }
   }
 
   void descendLifter(){
-    for (int pos = 56; pos >= 0; pos -= posSpeed) { 
+    for (int pos = 120; pos >= 75; pos -= posSpeed) { 
+      //lifterServo.attach(lifterServoPin);
       lifterServo.write(pos);              
       delay(30);                       
     }
@@ -54,9 +59,10 @@ namespace servos {
   }
 
   void begin() {
+
     grabberServo.attach(grabberServoPin);
     lifterServo.attach(lifterServoPin);
-    lifterServo.write(53);
+    lifterServo.write(120);
     grabberServo.write(110);
   }
 }

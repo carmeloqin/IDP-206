@@ -148,6 +148,17 @@ namespace debug {
   void debugGeneral() {
     motors::runLeft(FORWARD);
   }
+
+  void servoTest() {
+    while(true) {
+      servos::pickUp();
+      delay(2000);
+      servos::dropOff();
+      delay(2000);
+    }
+  
+  }
+  
 }
 
 #endif

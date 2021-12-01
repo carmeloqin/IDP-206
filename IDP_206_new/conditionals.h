@@ -125,26 +125,30 @@ namespace conditionals {
   }
 
   bool isDummyDetected() {
-    return sensors::findDummy() != NO_DUMMY || isWithinRangeUltraSonic(39, 41);
+    return sensors::findDummy() != NO_DUMMY || isWithinRangeUltraSonic(0, 55);
   }
   
   bool isDummyFound1() {
     byte flag = sensors::findDummy();
-    bool found = !(flag == NO_DUMMY) && isWithinRangeUltraSonic(40, 50);
+    bool found = !(flag == NO_DUMMY) && isWithinRangeUltraSonic(0, 50);
 //    Serial.println(found);
     return found;
   }
 
   bool isDummyFound() {
 //    byte flag = sensors::findDummy();
-    bool found = isWithinRangeUltraSonic(65, 100); //changed it to 100
+    bool found = isWithinRangeUltraSonic(0, 80); //changed it to 100
 //    Serial.println(found);
     return found;
   }
 
+  bool isDummyFound2() {
+    return isWithinRangeUltraSonic(55, 1000);
+  }
+
     bool isDummyInRange() { //new, todo
 //    byte flag = sensors::findDummy();
-    bool found = isWithinRangeUltraSonic(65, 80); //will change this range, control car to this range.
+    bool found = isWithinRangeUltraSonic(50, 65); //will change this range, control car to this range.
 //    Serial.println(found);
     return found;
   }
