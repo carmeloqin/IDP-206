@@ -10,8 +10,6 @@ SharpIR IRDistanceSensor = SharpIR(IRDistancePin, IRDistanceSensorModel);
 // Moved declaration here cuz if I put it in sensors.begin it says
 // " 'IRDistanceSensor' was not declared in this scope "
 
-
-
 namespace sensors {
   int analogReadAverage(int pin, int times = 3) {
     int sum = 0;
@@ -97,7 +95,7 @@ namespace sensors {
     return NO_DUMMY;
   }
 
-  byte identifyDummy() {
+  byte findDummy() {
     int left_count = sensors::getIRPhototransitorCounts(leftIRPhototransitorPin);
     int right_count = sensors::getIRPhototransitorCounts(rightIRPhototransitorPin);
 
@@ -113,7 +111,7 @@ namespace sensors {
     } else if (count > 5 && count < 30) {
       last_dummy_found = RED_DUMMY;
     } else if (count > 140 && count < 260) {
-      last_dummy_found BLUE_DUMMY;
+      last_dummy_found = BLUE_DUMMY;
     }
     return last_dummy_found;
   }

@@ -68,18 +68,30 @@ namespace algo {
     line_follower.run(FORWARD, conditionals::isArrivingJunctionBack, 2, [](){delay(500);}); // go further into the box for 500ms
   }
   
+  void toBaseFromRedBlueJunction() {
+    struct {
+      bool arrived = false;
+  
+      bool isTrue() {
+        if(!arrived) {
+          arrived = conditionals::isArrivingJunctionFront();
+          return false;
+        }
+        return conditionals::isArrivingJunctionBack();
+      }
+    } stopping_condition;
+  
+    line_follower.run(FORWARD, [stopping_condition](){return stopping_condition.isTrue();}, 1, [](){delay(500);}); // go further into the box for 500ms
+  }
+  
   void toBaseFromRed() {
     simple_controller.rotate(ANTICLOCKWISE, conditionals::foundLineWhileRotateACW, 2);
-
-    line_follower.run(FORWARD, conditionals::isArrivingJunctionFront);
-    line_follower.run(FORWARD, conditionals::isArrivingJunctionBack, 1, [](){delay(500);}); // go further into the box for 500ms
+    toBaseFromRedBlueJunction();
   }
 
   void toBaseFromBlue() {
     simple_controller.rotate(CLOCKWISE, conditionals::foundLineWhileRotateCW, 2);
-
-    line_follower.run(FORWARD, conditionals::isArrivingJunctionFront);
-    line_follower.run(FORWARD, conditionals::isArrivingJunctionBack, 1, [](){delay(500);}); // go further into the box for 500ms
+    toBaseFromRedBlueJunction();
   }
 
   void dropOff(byte dummy, bool returnToBaseAfterwards = false) {
@@ -127,25 +139,34 @@ namespace algo {
     }
   }
 
-  void goSLow() {
+  void goSlow() {
     // go slow to identify the dummy
     line_follower.run(FORWARD, conditionals::isDummyDetected, 1, [](){}, 70);
   }
 
-  
-
   void rescueLineDummy() {
-    line_follower.run(FORWARD, conditionals::isArrivingJunctionBack, 2);
-
-    line_follower.run(FORWARD, conditionals::isDummyFound);
+    // passing 2 junctions then stop when a dummy is found
+    struct {
+      int junctions_arrived = 0;
+    
+      bool isTrue() {
+        if (junctions_arrived < 2) {
+          if (conditionals::isArrivingJunctionBack()) {
+            junctions_arrived++;
+          }
+          return false;
+        }
+        return conditionals::isDummyFound();
+      }
+    } stopping_condition;
+    line_follower.run(FORWARD, [stopping_condition](){return stopping_condition.isTrue();});
 
     // identify the dummy
-    //goSlow();
-    last_dummy_found = BLUE_DUMMY;
+    goSlow();
     indicator::indicate(last_dummy_found);
 
     // grab the dummy
-    // servos::pickUp();
+    servos::pickUp();
     delay(5000);
 
     dropOff(last_dummy_found, true); // true means return to base afterwards. false means search area.

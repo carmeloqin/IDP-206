@@ -8,6 +8,7 @@
 #include "conditionals.h"
 
 namespace controllers {
+
   class PID {
     private:
       int last_error = 0;
@@ -50,7 +51,8 @@ namespace controllers {
       }
   
     public:
-      void run(byte flag, bool isDone(), int repeat = 1,
+      template<typename Function>
+      void run(byte flag, Function&& isDone, int repeat = 1,
                void done() = [](){},
                int power = averagePower,
                void error() = [](){Serial.println("[controllers]Error! Vehicle is off the line!");}) {
@@ -85,7 +87,8 @@ namespace controllers {
 
   class SimpleController {
     public:
-      void run(byte flag, bool isDone(), int repeat = 1,
+      template<typename Function>
+      void run(byte flag, Function&& isDone, int repeat = 1,
                void done() = [](){},
                int power = averagePower,
                void error() = [](){Serial.println("[controllers]Error! Vehicle is not moving!");}) {
