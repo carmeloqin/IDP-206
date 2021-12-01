@@ -102,11 +102,12 @@ namespace sensors {
     int right_count = sensors::getIRPhototransitorCounts(rightIRPhototransitorPin);
 
     int count;
-    if (left_count > right_count) {
-      count = left_count;
-    } else {
-      count = right_count;
-    }
+//    if (left_count > right_count) {
+//      count = left_count;
+//    } else {
+//      count = right_count;
+//    }
+    count = right_count; //temp
 
     if (count > 300 && count < 400) {
       last_dummy_found = WHITE_DUMMY;

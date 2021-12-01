@@ -6,7 +6,8 @@ Servo grabberServo;
 Servo lifterServo;
 
 namespace servos {
-
+  int up = 135;
+  int down = 75;
   int posSpeed = 1;
   
   void openGrabber(){
@@ -26,7 +27,7 @@ namespace servos {
   }
 
   void ascendLifter(){
-    for (int pos = 75; pos <= 120; pos += posSpeed) {
+    for (int pos = 75; pos <= 135; pos += posSpeed) {
       //lifterServo.attach(lifterServoPin);
       // in steps of 1 degree
       lifterServo.write(pos);              
@@ -35,7 +36,7 @@ namespace servos {
   }
 
   void descendLifter(){
-    for (int pos = 120; pos >= 75; pos -= posSpeed) { 
+    for (int pos = 135; pos >= 75; pos -= posSpeed) { 
       //lifterServo.attach(lifterServoPin);
       lifterServo.write(pos);              
       delay(30);                       
@@ -62,7 +63,7 @@ namespace servos {
 
     grabberServo.attach(grabberServoPin);
     lifterServo.attach(lifterServoPin);
-    lifterServo.write(120);
+    lifterServo.write(135);
     grabberServo.write(110);
   }
 }
