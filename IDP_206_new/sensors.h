@@ -146,13 +146,13 @@ namespace sensors {
     // SerialPrintLineSensor
     // SerialPrintOptoSwitch
 
-    Serial.print(current_l_value.front_left);
-    Serial.print('\t');
-    Serial.print(current_l_value.front_right);
-    Serial.print('\t');
-    Serial.print(current_l_value.back_left);
-    Serial.print('\t');
-    Serial.println(current_l_value.back_right);
+//    Serial.print(current_l_value.front_left);
+//    Serial.print('\t');
+//    Serial.print(current_l_value.front_right);
+//    Serial.print('\t');
+//    Serial.print(current_l_value.back_left);
+//    Serial.print('\t');
+//    Serial.println(current_l_value.back_right);
 
 //New 26/11/2021, Commented on 28/11/2021
 //    if(digitalRead(backRightPin)) {

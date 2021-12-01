@@ -54,11 +54,11 @@ namespace algo {
     line_follower.run(FORWARD, conditionals::isArrivingJunctionFront);
     if (flag == WHITE_DUMMY) {
       start = millis();
-      simple_controller.run(FORWARD, [start](){return millis() - start > 250;});
+      simple_controller.run(FORWARD, [start](){return millis() - start > 500;});
       Serial.println("[algo::dropOff]Dummy being dropped off"); //todo
       servos::dropOff();
       Serial.println("[algo::dropOff]Dummy dropped off"); //todo
-      simple_controller.rotate(CLOCKWISE, conditionals::foundLineWhileRotateCW, 1);
+      simple_controller.rotate(CLOCKWISE, conditionals::foundLineWhileRotateCW, 2); //originally 2
     } else {
       start = millis();
       simple_controller.run(BACKWARD, [start](){return millis() - start > 250;});
@@ -73,7 +73,7 @@ namespace algo {
       switch(flag) {
         case RED_DUMMY:
           simple_controller.rotate(CLOCKWISE, [start, timeout](){return millis() - start > timeout;});
-      Serial.println("4");
+          Serial.println("4");
 
           servos::dropOff();
           simple_controller.rotate(CLOCKWISE, conditionals::foundLineWhileRotateCW, 2);
@@ -90,18 +90,21 @@ namespace algo {
   void getLineDummy() {
     findDummy(); // Going forward until it finds a dummy
     Serial.println("[algo::getLineDummy]Dummy Found"); //todo
-    delay(2000);
     
-    // TODO identify dummy here
+    // TODO Adjust Distance
+    
+
+    // TODO identify dummy
     
     indicator::indicate(last_dummy_found);
 
     // Grab dummy
     Serial.println("[algo::getLineDummy]Dummy being grabbed"); //todo
-    servos::pickUp();
+    delay(5000); //temporary todo
+    //servos::pickUp();
     Serial.println("[algo::getLineDummy]Dummy grabbed"); //todo    
-    
-    dropOff(WHITE_DUMMY);  // WHITE TO TEST IT  
+
+    dropOff(RED_DUMMY);  // WHITE TO TEST IT  
 
     
     

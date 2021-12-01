@@ -74,6 +74,9 @@ const int tuningFactor = 100;
 // Line follower
 int offset = 0;
 
+// Simple Controller
+int rotateDelay = 150;
+
 // Motors
 int averagePower = 230;
 int defaultDelay = 0;
