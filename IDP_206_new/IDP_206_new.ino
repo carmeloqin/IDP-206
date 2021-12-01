@@ -37,10 +37,14 @@ void loop() {
 // DEBUGGING FOR ALGORITHM
 //    algo::findDummy(); //Find with ultrasonic
 
-// FINAL CODE
-    algo::getLineDummy();
+//    algo::getLineDummy();
 //    simple_controller.rotate(CLOCKWISE, conditionals::foundLineWhileRotateCW);
 //    algo::dropOff(WHITE_DUMMY);
 //    debug::debugGeneral();
+
+// FINAL CODE
+    algo::rescueLineDummy();
+
+
   }
 }

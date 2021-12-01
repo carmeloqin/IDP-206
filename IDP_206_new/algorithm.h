@@ -135,10 +135,12 @@ namespace algo {
     line_follower.run(FORWARD, conditionals::isDummyFound);
 
     // identify the dummy
-    goSlow();
+    //goSlow();
+    last_dummy_found = BLUE_DUMMY;
     indicator::indicate(last_dummy_found);
 
     // grab the dummy
+    // servos::pickUp();
     delay(5000);
 
     dropOff(last_dummy_found, true); // true means return to base afterwards. false means search area.
