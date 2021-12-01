@@ -10,8 +10,16 @@ namespace conditionals {
   bool curr_at_junction_back = false;
   bool prev_at_junction_back = false;
 
+//---------- Boolean Functions ----------//
   bool isAllWhite(int val_1, int val_2) {
     return sensors::isWhite(val_1) && sensors::isWhite(val_2);
+  }
+
+  bool isAllWhiteFront(int val_1, int val_2) {
+    return sensors::isWhiteFront(val_1) && sensors::isWhiteFront(val_2);
+  }
+  bool isAllWhiteBack(int val_1, int val_2) {
+    return sensors::isWhiteBack(val_1) && sensors::isWhiteBack(val_2);
   }
 
   bool isAnyWhite(int val_1, int val_2) {
@@ -22,10 +30,13 @@ namespace conditionals {
     return sensors::isBlack(val_1) || sensors::isBlack(val_2);
   }
 
+
+//---------- Junction Functions ----------//
+// FRONT SENSORS
   void readFrontValues() {
     LightValues l_value = sensors::getLightValues();
     prev_at_junction_front = curr_at_junction_front;
-    curr_at_junction_front = isAllWhite(l_value.front_right, l_value.front_left);
+    curr_at_junction_front = isAllWhiteFront(l_value.front_right, l_value.front_left);
   }
 
   bool isAtJunctionFront() {
@@ -43,10 +54,11 @@ namespace conditionals {
     return !curr_at_junction_front && prev_at_junction_front;
   }
 
+// BACK SENSORS
   void readBackValues() {
     LightValues l_value = sensors::getLightValues();
     prev_at_junction_back = curr_at_junction_back;
-    curr_at_junction_back = isAllWhite(l_value.back_right, l_value.back_left);
+    curr_at_junction_back = isAllWhiteBack(l_value.back_right, l_value.back_left);
   }
   
   bool isAtJunctionBack() {

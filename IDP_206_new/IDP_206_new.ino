@@ -21,7 +21,7 @@ void loop() {
 
 // DEBUGGING FOR SENSORS/ACTUATORS
 //    Serial.println("FL\tFR\tBR\tBL");
-    debug::plotLightValues();
+//    debug::plotLightValues();
 //    debug::plotLightValuesDerivative();
 
 //    debug::findDummy(); //with IR phototransistor
@@ -38,7 +38,7 @@ void loop() {
 //    algo::findDummy(); //Find with ultrasonic
 
 // FINAL CODE
-//    algo::getLineDummy();
+    algo::getLineDummy();
 //    simple_controller.rotate(CLOCKWISE, conditionals::foundLineWhileRotateCW);
 //    algo::dropOff(WHITE_DUMMY);
 //    debug::debugGeneral();

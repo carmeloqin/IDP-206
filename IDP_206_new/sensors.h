@@ -111,6 +111,20 @@ namespace sensors {
     }
     return false;
   }
+
+  // Jensen - attempt to add separate functions for front/back
+  bool isWhiteFront(int value) {
+    if (value - WHITEFRONT < THRESHOLD) {
+      return true;
+    }
+    return false;
+  }
+  bool isWhiteBack(int value) {
+    if (value - WHITEBACK < THRESHOLD) {
+      return true;
+    }
+    return false;
+  }
   
   bool isBlack(int value) {
     if (BLACK - value < THRESHOLD) {
