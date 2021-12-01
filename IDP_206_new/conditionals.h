@@ -123,6 +123,10 @@ namespace conditionals {
     int d = sensors::getDistanceIR();
     return low < d && d < high;
   }
+
+  bool isDummyDetected() {
+    return !(sensors::findDummy() == NO_DUMMY);
+  }
   
   bool isDummyFound1() {
     byte flag = sensors::findDummy();

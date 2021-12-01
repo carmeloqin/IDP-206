@@ -76,10 +76,10 @@ namespace controllers {
             delay(50);
           }
         }
-        
+
+        done();
         motors::runLeft(RELEASE);
         motors::runRight(RELEASE);
-        done();
       }
   };
 
