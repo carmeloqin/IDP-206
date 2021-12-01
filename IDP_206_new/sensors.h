@@ -88,21 +88,34 @@ namespace sensors {
 //    Serial.println(average);
     // last_dummy_found will not be updated if NO_DUMMY is found
     if (average > 300 && average < 400) {
-      last_dummy_found = WHITE_DUMMY;
+      return WHITE_DUMMY;
     } else if (average > 5 && average < 30) {
-      last_dummy_found = RED_DUMMY;
+      return RED_DUMMY;
     } else if (average > 140 && average < 260) {
-      last_dummy_found = BLUE_DUMMY;
+      return BLUE_DUMMY;
     }
-    return last_dummy_found;
+    return NO_DUMMY;
   }
 
-  byte findDummy() {
-    byte flag = _findDummyPin(leftIRPhototransitorPin);
-    if (flag == NO_DUMMY) {
-      return _findDummyPin(rightIRPhototransitorPin);
+  byte identifyDummy() {
+    int left_count = sensors::getIRPhototransitorCounts(leftIRPhototransitorPin);
+    int right_count = sensors::getIRPhototransitorCounts(rightIRPhototransitorPin);
+
+    int count;
+    if (left_count > right_count) {
+      count = left_count;
+    } else {
+      count = right_count;
     }
-    return flag;
+
+    if (count > 300 && count < 400) {
+      last_dummy_found = WHITE_DUMMY;
+    } else if (count > 5 && count < 30) {
+      last_dummy_found = RED_DUMMY;
+    } else if (count > 140 && count < 260) {
+      last_dummy_found BLUE_DUMMY;
+    }
+    return last_dummy_found;
   }
 
   bool isWhite(int value) {
@@ -146,13 +159,13 @@ namespace sensors {
     // SerialPrintLineSensor
     // SerialPrintOptoSwitch
 
-//    Serial.print(current_l_value.front_left);
-//    Serial.print('\t');
-//    Serial.print(current_l_value.front_right);
-//    Serial.print('\t');
-//    Serial.print(current_l_value.back_left);
-//    Serial.print('\t');
-//    Serial.println(current_l_value.back_right);
+    Serial.print(current_l_value.front_left);
+    Serial.print('\t');
+    Serial.print(current_l_value.front_right);
+    Serial.print('\t');
+    Serial.print(current_l_value.back_left);
+    Serial.print('\t');
+    Serial.println(current_l_value.back_right);
 
 //New 26/11/2021, Commented on 28/11/2021
 //    if(digitalRead(backRightPin)) {

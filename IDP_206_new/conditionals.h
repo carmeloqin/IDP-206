@@ -125,7 +125,7 @@ namespace conditionals {
   }
 
   bool isDummyDetected() {
-    return !(sensors::findDummy() == NO_DUMMY);
+    return sensors::findDummy() != NO_DUMMY;
   }
   
   bool isDummyFound1() {
