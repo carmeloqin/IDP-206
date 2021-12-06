@@ -1,3 +1,14 @@
+/*
+IDP Group M206 (Michaelmas 2021)
+
+Debug: containing functions used in debugging
+- plotLightValues: plot line sensors raw readings to Serial Plotter
+- plotLightValueDerivates: plot derivatives of line sensors raw readings to Serial Plotter
+- plotDistanceUltraSonic: prints distance got from UltraSonic readings 
+- findDummy: prints type of dummy in front of the robot
+
+*/
+
 #ifndef DEBUG_H
 #define DEBUG_H
 
@@ -7,6 +18,7 @@
 
 namespace debug {
   void plotLightValues() {
+    
     Serial.println("FL\tFR\tBL\tBR");
 
     while(true) {
@@ -95,13 +107,6 @@ namespace debug {
     }
   }
 
-  void findDummyaa() {
-    while(true) {
-      Serial.println(conditionals::isDummyFound());
-      delay(50);
-    }
-  }
-
   void indicatorTest() {
     while(true){
       indicator::moving();
@@ -143,10 +148,6 @@ namespace debug {
       Serial.println(rightEncoderCount);
       delay(100);
     }  
-  }
-
-  void debugGeneral() {
-    motors::runLeft(FORWARD);
   }
 
   void servoTest() {

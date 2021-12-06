@@ -1,3 +1,13 @@
+/*
+IDP Group M206 (Michaelmas 2021)
+
+Controllers: contains classes of different controllers
+- PID: simple PID controller
+- LineFollower: controller to follow the lines
+- SimpleController: controller to run forwards/backwards & rotate (without line following)
+
+*/
+
 #ifndef CONTROLLERS_H
 #define CONTROLLERS_H
 
@@ -26,16 +36,20 @@ namespace controllers {
       }
   
       int next(int error) {
+        // Return the updated output from the new error
+        
         integral += error;
         derivative = error - last_error;
   
         int output = Kp * error + Ki * integral + Kd * derivative;
-        output /= tuningFactor; //  Use multiply factor of 100 to get finer tuning
+        output /= tuningFactor; //  Use multiply factor to get finer tuning
   
         return output;
       }
   
       void reset() {
+        // Reset the pid controller
+        
         last_error = 0;
         integral = 0;
         derivative = 0;
@@ -46,7 +60,7 @@ namespace controllers {
     private:
       int getError() {
         LightValues l_value = sensors::getLightValues();
-        return (l_value.front_right - l_value.front_left) - offset;
+        return (l_value.front_right - l_value.front_left) - offset; // Using offset for better results
       }
   
     public:
@@ -54,10 +68,13 @@ namespace controllers {
                void done() = [](){},
                int power = averagePower,
                void error() = [](){Serial.println("[controllers]Error! Vehicle is off the line!");}) {
+        // Run forward/backward using PID control line follower
+        
         PID pid {};
         motors::runLeft(flag);
         motors::runRight(flag);
-        delay(250); //todo remove
+        delay(250);
+        
         for (int i = 0; i < repeat; i++) {
           while (!isDone()) {
             if (!conditionals::isOnLineFront()) {
@@ -89,6 +106,8 @@ namespace controllers {
                void done() = [](){},
                int power = averagePower,
                void error() = [](){Serial.println("[controllers]Error! Vehicle is not moving!");}) {
+        // Simple runing forward/backward
+        
         motors::runLeft(flag);
         motors::runRight(flag);
         motors::setMotorsSpeed(0, power);
@@ -103,10 +122,9 @@ namespace controllers {
             delay(50);
           }
         }
-        
+        done();        
         motors::runLeft(RELEASE);
         motors::runRight(RELEASE);
-        done();
       }
       
       void rotate(byte flag, bool isDone(), int repeat = 1,
@@ -125,7 +143,7 @@ namespace controllers {
         }
         motors::setMotorsSpeed(0, power); // turning = 0
 
-        delay(rotateDelay); // TOCHANGE
+        delay(rotateDelay);
         for (int i = 0; i < repeat; i++) {
           while (!isDone()) {
             if (!conditionals::isRotating()) {
@@ -137,10 +155,9 @@ namespace controllers {
           } 
         }
 
-//        delay(50); // To get back to the centre of the line; //don't need it now
+        done();
         motors::runLeft(RELEASE);
         motors::runRight(RELEASE);
-        done();
       }
   };
 }

@@ -1,3 +1,13 @@
+/*
+IDP Group M206 (Michaelmas 2021)
+
+Indicator: containing functions controlling the LEDs
+- indicate: indicates the type of dummy using LEDs (red & green LEDs)
+- moving: indicates the robot is moving (amber LED)
+- stopped: stops indicating the robot is moving (amber LED)
+
+*/
+
 #ifndef INDICATOR_H
 #define INDICATOR_H
 
@@ -39,8 +49,6 @@ namespace indicator {
     pinMode(amberLEDPin, OUTPUT);
     pinMode(redLEDPin, OUTPUT);
     pinMode(greenLEDPin, OUTPUT);
-
-    
   }
   
 }

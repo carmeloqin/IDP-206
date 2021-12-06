@@ -1,3 +1,13 @@
+/*
+IDP Group M206 (Michaelmas 2021)
+
+Main code;
+- Sets up all the sensors and actuaotors
+- Runs the selected program from algorithm.h
+
+*/
+
+
 #include "algorithm.h"
 #include "debug.h"
 
@@ -18,37 +28,6 @@ void setup() {
 void loop() {
   if (conditionals::isStartButtonPressed()) {
     Serial.println("Starting...");
-
-// DEBUGGING FOR SENSORS/ACTUATORS
-//    Serial.println("FL\tFR\tBR\tBL");
-//    debug::plotLightValues();
-//    debug::plotLightValuesDerivative();
-
-//    debug::findDummy(); //with IR phototransistor
-//    debug::plotIRPhototransitorCounts();
-//    debug::findDummyaa();
-
-//    debug::plotDistanceUltraSonic();
-
-//    debug::indicatorTest();
-//    debug::getDistanceIRTest();
-//    debug::trackEncoderCountTest();
-
-
-//    debug::servoTest();
-
-// DEBUGGING FOR ALGORITHM
-//    algo::findDummy(); //Find with ultrasonic
-
-//    algo::getLineDummy();
-//    simple_controller.rotate(CLOCKWISE, conditionals::foundLineWhileRotateCW);
-//    algo::dropOff(WHITE_DUMMY);
-//    debug::debugGeneral();
-
-// FINAL CODE
     algo::rescueLineDummy();
-
-
-
   }
 }

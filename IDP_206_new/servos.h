@@ -1,3 +1,14 @@
+/*
+IDP Group M206 (Michaelmas 2021)
+
+Servo: containing functions that controll the grabber
+- openGrabber: open the grabber
+- closeGrabber: close the grabber
+- ascendLifter: Lifting the grabber
+- descendLifter: Lowering the grabber
+
+*/
+
 #include <Servo.h>
 #include "Arduino.h"
 #include "variables.h"
@@ -6,38 +17,35 @@ Servo grabberServo;
 Servo lifterServo;
 
 namespace servos {
-  int up = 135;
-  int down = 75;
+  int upPos = 95;
+  int downPos = 20;
+  int openPos = 110;
+  int closePos = 20;
   int posSpeed = 1;
   
   void openGrabber(){
-    for (int pos = 20; pos <= 110; pos += posSpeed) { 
-      //grabberServo.attach(grabberServoPin);
+    for (int pos = closePos; pos <= openPos; pos += posSpeed) { 
       grabberServo.write(pos);              
         delay(30);                      
     }
   }
 
   void closeGrabber(){
-    for (int pos = 110; pos >= 20; pos -= posSpeed) {
-      //grabberServo.attach(grabberServoPin);
+    for (int pos = openPos; pos >= closePos; pos -= posSpeed) {
       grabberServo.write(pos);              
       delay(30);                       
     }
   }
 
   void ascendLifter(){
-    for (int pos = 20; pos <= 95; pos += posSpeed) {
-      //lifterServo.attach(lifterServoPin);
-      // in steps of 1 degree
+    for (int pos = downPos; pos <= upPos; pos += posSpeed) {
       lifterServo.write(pos);              
       delay(30);                       
     }
   }
 
   void descendLifter(){
-    for (int pos = 95; pos >= 20; pos -= posSpeed) { 
-      //lifterServo.attach(lifterServoPin);
+    for (int pos = upPos; pos >= downPos; pos -= posSpeed) { 
       lifterServo.write(pos);              
       delay(30);                       
     }
@@ -60,10 +68,9 @@ namespace servos {
   }
 
   void begin() {
-
     grabberServo.attach(grabberServoPin);
     lifterServo.attach(lifterServoPin);
-    lifterServo.write(95);
-    grabberServo.write(110);
+    lifterServo.write(upPos);
+    grabberServo.write(openPos);
   }
 }

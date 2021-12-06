@@ -1,16 +1,22 @@
+/*
+IDP Group M206 (Michaelmas 2021)
+
+Sensors: containing functions that reads data from sensors
+- getDistanceUltraSonic: returns the distance got from Ultrasonic sensor
+- findDummy: returns the type of dummy in front of the robot
+- getLightValues: returns reading from 4 line sensors
+
+*/
+
 #ifndef SENSORS_H
 #define SENSORS_H
 
 #include "Arduino.h"
 #include "variables.h"
+#include <SharpIR.h>
 
 // IR Distance
-#include <SharpIR.h>
 SharpIR IRDistanceSensor = SharpIR(IRDistancePin, IRDistanceSensorModel);
-// Moved declaration here cuz if I put it in sensors.begin it says
-// " 'IRDistanceSensor' was not declared in this scope "
-
-
 
 namespace sensors {
   int analogReadAverage(int pin, int times = 3) {
@@ -30,7 +36,6 @@ namespace sensors {
     digitalWrite(ultraSonicPingPin, LOW);
     duration = pulseIn(ultraSonicEchoPin, HIGH);
     mm = 10 * duration / 29 / 2;
-    //Serial.println(mm); //SerialPrintUltrasonic
     return mm;
   }
 
@@ -84,8 +89,6 @@ namespace sensors {
     }
     
     int average = sum / repeat;
-//    Serial.print("av");
-//    Serial.println(average);
     // last_dummy_found will not be updated if NO_DUMMY is found
     if (average > 300 && average < 400) {
       return WHITE_DUMMY;
@@ -101,13 +104,12 @@ namespace sensors {
     int left_count = sensors::getIRPhototransitorCounts(leftIRPhototransitorPin);
     int right_count = sensors::getIRPhototransitorCounts(rightIRPhototransitorPin);
 
-    int count;
-//    if (left_count > right_count) {
-//      count = left_count;
-//    } else {
-//      count = right_count;
-//    }
-    count = left_count; //temp
+    int count; // get the higher counts
+    if (left_count > right_count) {
+      count = left_count;
+    } else {
+      count = right_count;
+    }
 
     if (count > 300 && count < 400) {
       last_dummy_found = WHITE_DUMMY;
@@ -126,7 +128,6 @@ namespace sensors {
     return false;
   }
 
-  // Jensen - attempt to add separate functions for front/back
   bool isWhiteFront(int value) {
     if (value - WHITEFRONT < THRESHOLD) {
       return true;
@@ -154,29 +155,6 @@ namespace sensors {
    
     current_l_value.back_right = analogReadAverage(backRightPin);
     current_l_value.back_left = analogReadAverage(backLeftPin);
-
-    // TAGS
-    // SerialPrintLightValues
-    // SerialPrintLineSensor
-    // SerialPrintOptoSwitch
-
-//    Serial.print(current_l_value.front_left);
-//    Serial.print('\t');
-//    Serial.print(current_l_value.front_right);
-//    Serial.print('\t');
-//    Serial.print(current_l_value.back_left);
-//    Serial.print('\t');
-//    Serial.println(current_l_value.back_right);
-
-//New 26/11/2021, Commented on 28/11/2021
-//    if(digitalRead(backRightPin)) {
-//      current_l_value.back_right = 1023;
-//    } else current_l_value.back_right = 0;
-//
-//    if (digitalRead(backLeftPin)) {
-//      current_l_value.back_left = 1023;
-//    } else current_l_value.back_left = 0;
-
     return current_l_value;
   } 
 
@@ -191,13 +169,7 @@ namespace sensors {
 
     return l_derivative;
   }
-
-  // Simple function not considering the direction
-  // Add direction in when motor working
-  // Use motor's input input signal (forward/backwards)
-  // as the direction.
-  // Also should investigate whether encoder(0) and encoder(1)
-  // Could work in the attach interrupt line.
+  
   void encoderLeft() {
     leftEncoderCount += 1;
   }
@@ -215,10 +187,6 @@ namespace sensors {
     pinMode(ultraSonicEchoPin, INPUT);
     pinMode(startButtonPin, INPUT_PULLUP);
     pinMode(IRDistancePin, INPUT);
-
-    // Create a new instance of the SharpIR class:
-    //SharpIR IRDistanceSensor = SharpIR(IRDistancePin, IRDistanceSensorModel);
-    // didn't work, error as seen in above declaration
 
     attachInterrupt(digitalPinToInterrupt(2), encoderLeft, CHANGE);
     attachInterrupt(digitalPinToInterrupt(3), encoderRight, CHANGE);

@@ -1,3 +1,12 @@
+/*
+IDP Group M206 (Michaelmas 2021)
+
+Motors: containing functions controlling motors
+- setMotorsSpeed: set motor speeds based on how much we need to turn the robot.
+     If one motor speed > 255 then decrease the other motor speed. 
+
+*/
+
 #ifndef MOTORS_H
 #define MOTORS_H
 

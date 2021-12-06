@@ -1,3 +1,22 @@
+/*
+IDP Group M206 (Michaelmas 2021)
+
+Conditionals: Contains boolean functions about robot state
+- isArrivingJunctionBack: returns true if line sensors at the back start to move into a white region
+- isAtJunctionBack: returns true if line sensors at the back have moved into a white region
+- isLeavingJunctionBack: returns true if line sensors at the back start to leave a white region
+
+- isArrivingJunctionFront: returns true if line sensors at the front start to move into a white region
+- isAtJunctionFront: returns true if line sensors at the front have moved into a white region
+- isLeavingJunctionFront: returns true if line sensors at the front start to leave a white region
+
+- isStartButtonPressed: returns true if the start button is pressed
+
+- isDummyDetected: returns true if a dummy is successfully identified
+- isObjectFound: returns true if there is an object within 10cm in front of the robot
+
+*/
+
 #ifndef CONDITIONALS_H
 #define CONDITIONALS_H
 
@@ -29,7 +48,6 @@ namespace conditionals {
   bool isAnyBlack(int val_1, int val_2) {
     return sensors::isBlack(val_1) || sensors::isBlack(val_2);
   }
-
 
 //---------- Junction Functions ----------//
 // FRONT SENSORS
@@ -68,9 +86,6 @@ namespace conditionals {
   
   bool isArrivingJunctionBack() {
     readBackValues();
-    if (curr_at_junction_back && !prev_at_junction_back){
-      Serial.println("junction");
-    }
     return curr_at_junction_back && !prev_at_junction_back;
   }
   
@@ -106,7 +121,7 @@ namespace conditionals {
   }
 
   bool isRotating() {
-    return true; // to-do: code checking if it's turning;
+    return true;
   }
   
   bool isMoving() {
@@ -130,32 +145,11 @@ namespace conditionals {
   bool isDummyDetected() {
     return sensors::findDummy() != NO_DUMMY || isWithinRangeUltraSonic(1, 40);
   }
-  
-  bool isDummyFound1() {
-    byte flag = sensors::findDummy();
-    bool found = !(flag == NO_DUMMY) && isWithinRangeUltraSonic(1, 35);
-//    Serial.println(found);
-    return found;
-  }
 
-  bool isDummyFound() {
-//    byte flag = sensors::findDummy();
+  bool isObjectFound() {
     bool found = isWithinRangeUltraSonic(1, 100); //changed it to 100
-//    Serial.println(found);
     return found;
   }
-
-  bool isDummyFound2() {
-    return isWithinRangeUltraSonic(35, 1000);
-  }
-
-    bool isDummyInRange() { //new, todo
-//    byte flag = sensors::findDummy();
-    bool found = isWithinRangeUltraSonic(50, 65); //will change this range, control car to this range.
-//    Serial.println(found);
-    return found;
-  }
-
 }
 
 #endif

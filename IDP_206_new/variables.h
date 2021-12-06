@@ -1,48 +1,14 @@
+/*
+IDP Group M206 (Michaelmas 2021)
+
+Variables: containing all the global variables.
+
+*/
+
 #ifndef VARIABLES_H
 #define VARIABLES_H
 
 // Pins
-//const int frontLeftPin = A3;
-//const int frontRightPin = A2;
-//const int backRightPin = A5;
-//const int backLeftPin = A4;
-//const int IRDistancePin = A1;
-//const int IRDistancePin2 = A0;
-//
-//const int ultraSonicPingPin = 2;
-//const int ultraSonicEchoPin = 3;
-//const int leftIRPhototransitorPin = 4;
-//const int rightIRPhototransitorPin = 5;
-//const int leftEncoderPin = 6;
-//const int rightEncoderPin = 7;
-//const int greenLEDPin = 8;
-//const int amberLEDPin = 9;
-//const int redLEDPin = 10;
-//const int speakerPin = 11;
-//const int startButtonPin = 13;
-
-//NEW PINS (26/11)
-//const int frontLeftPin = A0;
-//const int frontRightPin = A1;
-//const int IRDistancePin = A2;
-//const int backLeftPin = 2;
-//const int backRightPin = 3;
-//
-//const int ultraSonicPingPin = 8;
-//const int ultraSonicEchoPin = 9;
-//const int leftIRPhototransitorPin = 4;
-//const int rightIRPhototransitorPin = 5;
-//const int leftEncoderPin = 6;
-//const int rightEncoderPin = 7;
-//const int amberLEDPin = A3;
-//const int greenLEDPin = A4;
-//const int redLEDPin = A5;
-//
-////const int redLEDPin = 10;
-////const int speakerPin = 11;
-//const int startButtonPin = 13;
-
-// Pins (30/11)
 const int frontLeftPin = A3;
 const int frontRightPin = A2;
 const int backRightPin = A1;
@@ -63,13 +29,11 @@ const int amberLEDPin = 11;
 const int greenLEDPin = 12;
 const int startButtonPin = 13;
 
-//speakerPin not installed cuz out of pins
-
 // PID
-int KP = 5;
-int KI = 0;
-int KD = 0;
-const int tuningFactor = 100;
+int KP = 50;
+int KI = 1;
+int KD = 2;
+const int tuningFactor = 1000;
 
 // Line follower
 int offset = 0;
@@ -88,7 +52,7 @@ const byte CLOCKWISE = 1;
 const byte ANTICLOCKWISE = 2;
 
 // Line sensors
-const int WHITE = 150; //todo, front/back threshold different!
+const int WHITE = 150;
 const int WHITEFRONT = 100;
 const int WHITEBACK = 450;
 const int BLACK = 750;

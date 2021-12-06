@@ -1,3 +1,13 @@
+/*
+IDP Group M206 (Michaelmas 2021)
+
+Algorithms
+- rescueLineDummy(): Main code for finding the first dummy
+- goSlow(): After detecting dummy with ultrasonic, detect IR signature while going slow
+- dropOff(): Move the dummy ot the respective delivery area and drop it off
+
+*/
+
 #ifndef ALGORITHM_H
 #define ALGORITHM_H
 
@@ -9,12 +19,16 @@
 
 namespace algo {
   unsigned long start;
-  
+
   void toWhite() {
+    // Go to white delivery area from the main line
+    
     line_follower.run(FORWARD, conditionals::isArrivingJunctionFront);
   }
 
   void toRedBlueJunction() {
+    // Go to the junction next to red and blue delivery area
+    
     line_follower.run(FORWARD, conditionals::isArrivingJunctionFront);
     
     start = millis();
@@ -26,6 +40,8 @@ namespace algo {
   }
 
   void toRed() {
+    // Go to red delivery area from the main line
+    
     toRedBlueJunction();
 
     start = millis();
@@ -33,6 +49,8 @@ namespace algo {
   }
 
   void toBlue() {
+    // Go to white delivery area from the main line
+    
     toRedBlueJunction();
 
     start = millis();
@@ -40,6 +58,8 @@ namespace algo {
   }
 
   void toSearchFromWhite() {
+    // Go back to the searching area after having dropped a dummy in white delivery area
+    
     start = millis();
     simple_controller.run(BACKWARD, [start](){return millis() - start > 250;});
 
@@ -52,14 +72,20 @@ namespace algo {
   }
 
   void toSearchFromRed() {
-    simple_controller.rotate(CLOCKWISE, conditionals::foundLineWhileRotateCW, 2);
+    // Go back to the searching area after having dropped a dummy in red delivery area
+    
+    simple_controller.rotate(CLOCKWISE, conditionals::foundLineWhileRotateCW, 1);
   }
 
   void toSearchFromBlue() {
+    // Go back to the searching area after having dropped a dummy in blue delivery area
+    
     simple_controller.rotate(ANTICLOCKWISE, conditionals::foundLineWhileRotateACW, 2);
   }
 
   void toBaseFromWhite() {
+    // Go back to the starting position after having dropped a dummy in white delivery area
+    
     start = millis();
     simple_controller.run(BACKWARD, [start](){return millis() - start > 250;});
 
@@ -69,6 +95,8 @@ namespace algo {
   }
   
   void toBaseFromRed() {
+    // Go back to the starting position after having dropped a dummy in red delivery area
+    
     simple_controller.rotate(ANTICLOCKWISE, conditionals::foundLineWhileRotateACW, 1);
 
     line_follower.run(FORWARD, conditionals::isArrivingJunctionFront);
@@ -76,6 +104,8 @@ namespace algo {
   }
 
   void toBaseFromBlue() {
+    // Go back to the starting position after having dropped a dummy in blue delivery area
+    
     simple_controller.rotate(CLOCKWISE, conditionals::foundLineWhileRotateCW, 2);
 
     line_follower.run(FORWARD, conditionals::isArrivingJunctionFront);
@@ -83,6 +113,8 @@ namespace algo {
   }
 
   void dropOff(byte dummy, bool returnToBaseAfterwards = false) {
+    // Go to the delivery area and drop the dummy based on their signals
+    
     switch (dummy) {
       case NO_DUMMY:
       case WHITE_DUMMY:
@@ -128,72 +160,28 @@ namespace algo {
   }
 
   void goSlow() {
-    // go slow to identify the dummy
+    // Go slow to identify the dummy
+    
     line_follower.run(FORWARD, conditionals::isDummyDetected, 1, [](){}, 100);
-
-//    line_follower.run(FORWARD, conditionals::isDummyFound2, 1, [](){}, 100);
   }
 
-  
-
   void rescueLineDummy() {
-//    line_follower.run(FORWARD, conditionals::isArrivingJunctionBack, 2);
-
-    Serial.println("1");
-
-    line_follower.run(FORWARD, conditionals::isDummyFound);
+    // Overall algorithm for rescuing the dummy that's on the line
+    
+    line_follower.run(FORWARD, conditionals::isObjectFound);
     delay(1000);
-
-//    line_follower.run(FORWARD, conditionals::isDummyInRange) ;
-
-
+    
     // identify the dummy
     goSlow();
-//    last_dummy_found = WHITE_DUMMY;
     indicator::indicate(last_dummy_found);
 
     // grab the dummy
     servos::pickUp();
-    //delay(5000);
 
-    dropOff(last_dummy_found, true); // true means return to base afterwards. false means search area.
+    dropOff(last_dummy_found, true); // true means return to base afterwards. false means go to search area.
     
     last_dummy_found = NO_DUMMY;
     indicator::indicate(last_dummy_found);
   }
-  
-  /*
-  void rescueSideDummy1() {
-
-    /*
-    1: Approaching side dummy
-    Go to white dummy junction
-    Go back a little bit
-    Turn left 60 degrees (Anticlockwise)
-    Scan for 60 degrees with distance sensor, look for objects with less than maybe 80cm
-    Approach side dummy slowly
-    If signal lost: go to next section
-     
-
-    int sixtyDegreesTime = 500; //to change
-     
-    //NUMBER 1
-    //Turn 180 degrees
-    simple_controller.rotate(CLOCKWISE, conditionals::foundLineWhileRotateCW, 2);
-    //Go to white junction
-    line_follower.run(FORWARD, conditionals::isArrivingJunctionFront, 2);
-    //Go back a little bit
-    simple_controller.run(BACKWARD, [start](){return millis() - start > 500;});
-    //Turn left 60 degrees (anticlockwise)
-    simple_controller.rotate(ANTICLOCKWISE, [start](){return millis() - start > sixtyDegreesTime;});
-    //Scan for 60 degrees with distance sensor, look for objects with less than maybe 80cm
-    //Record the time for first large differentiation change
-    //Turn back with half the time
-    simple_controller.rotate(ANTICLOCKWISE, [start](){return millis() - start > sixtyDegreesTime;});
-    
-    
-  }
-  */
-  
 }
 #endif 
